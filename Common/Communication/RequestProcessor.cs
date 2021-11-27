@@ -7,7 +7,7 @@ namespace Common.Communication
 {
     public static class RequestProcessor
     {
-        public static Response Process(string requestData, Server server)
+        public static Response Process(string requestData, RequestHandler requestHandler)
         {
             return Serializer.DeserializeObject<Request>(requestData).Type switch
             {

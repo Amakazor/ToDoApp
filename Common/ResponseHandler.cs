@@ -2,7 +2,7 @@
 
 namespace Common
 {
-    public abstract class Client : TcpClient
+    public abstract class ResponseHandler
     {
         public abstract void HandlePingResponse();
         public abstract void HandleNullResponse();
