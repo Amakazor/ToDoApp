@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Todo.Common.Entities
+namespace Common.Entities
 {
     [DataContract()]
     public class Task : IEquatable<Task>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Todo.Common.Entities
+namespace Common.Entities
 {
     [DataContract()]
     public class Tasklist

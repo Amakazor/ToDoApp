@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Todo.Common.Entities.Enums;
+using Common.Entities.Enums;
 
-namespace Todo.Common.Entities
+namespace Common.Entities
 {
     [DataContract()]
     public class User : IEquatable<User>

@@ -1,4 +1,4 @@
-﻿namespace Todo.Common.Entities.Enums
+﻿namespace Common.Entities.Enums
 {
     public enum UserType
     {
