@@ -15,10 +15,9 @@ namespace Common.Models
     
     public class User
     {
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [ForeignKey(nameof(TasklistId))]
+        public Tasklist Id { get; set; }
+        public int? TasklistId { get; set; }
 
         [MaxLength(64)]
         [Required]
@@ -41,13 +40,14 @@ namespace Common.Models
         public User()
         {
         }
-        public User(string firstName, string lastName, string username,string password, UserType userType)
+        public User(string firstName, string lastName, string username,string password, UserType userType, Tasklist id)
         {
             this.FirstName = firstName;
             this.Lastname = lastName;
             this.Username = username;
             this.Password = password;
             this.UserType = userType;
+            this.Id = id;
         }
     }
 }

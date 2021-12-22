@@ -14,9 +14,9 @@ namespace Common.Models
     [Table("TaskStatus")]
     public class TaskStatus
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [ForeignKey(nameof(TasklistId))]
+        public Tasklist Id { get; set; }
+        public int? TasklistId { get; set; }
 
         [Required]
         [StringLength(128)]
@@ -26,7 +26,7 @@ namespace Common.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        [NotMapped]
         public Color Color { get; set; }
 
         public TaskStatus()

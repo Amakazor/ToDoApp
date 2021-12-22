@@ -25,11 +25,15 @@ namespace Common.Models
         [MaxLength(64)]
         [Required]
         public User Owner { get; }
-               
-        public HashSet<User> Members { get; }
+                
+        //public HashSet<User> Members { get; }
+        public HashSet<User> Members { get; set; } = new HashSet<User>();
 
-        public HashSet<Task> Tasks { get; }
+        //public HashSet<Task> Tasks { get; }
+        public HashSet<Task> Tasks { get; set; } = new HashSet<Task>();
 
-        public HashSet<TaskStatus> TaskStatuses { get; }
+        //public HashSet<TaskStatus> TaskStatuses { get; }
+        public HashSet<TaskStatus> TaskStatuses { get; set; } = new HashSet<TaskStatus>();
+
     }
 }

@@ -13,9 +13,9 @@ namespace Common.Models
     [Table("Task")]
     public class Task
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [ForeignKey(nameof(TasklistId))]
+        public Tasklist Id { get; set; }
+        public int? TasklistId { get; set; }
 
         [Required]
         [StringLength(128)]
@@ -32,11 +32,8 @@ namespace Common.Models
         [MaxLength(64)]
         [Required]
         public User Author { get; }
-
-        [ForeignKey(nameof(StatusId))]
+       
         public TaskStatus Status { get; set; }
-
-        public int? StatusId { get; set; }
 
         public Task()
         {
