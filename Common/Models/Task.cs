@@ -13,9 +13,9 @@ namespace Common.Models
     [Table("Task")]
     public class Task
     {
-        [ForeignKey(nameof(TasklistId))]
+        [ForeignKey(nameof(TaskId))]
         public Tasklist Id { get; set; }
-        public int? TasklistId { get; set; }
+        public int? TaskId { get; set; }
 
         [Required]
         [StringLength(128)]

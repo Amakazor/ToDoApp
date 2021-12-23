@@ -14,6 +14,11 @@ namespace Common.Models
     [Table("TaskList")]
     public class Tasklist
     {
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id_TaskList_number { get; set; }
+
         [Required]
         [StringLength(128)]
         public Guid Guid { get; }

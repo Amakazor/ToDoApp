@@ -15,9 +15,9 @@ namespace Common.Models
     
     public class User
     {
-        [ForeignKey(nameof(TasklistId))]
+        [ForeignKey(nameof(UserId))]
         public Tasklist Id { get; set; }
-        public int? TasklistId { get; set; }
+        public int? UserId { get; set; }
 
         [MaxLength(64)]
         [Required]
