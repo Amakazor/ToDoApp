@@ -17,15 +17,18 @@ namespace Common.Models
         public DbSet<Tasklist> Tasklists { get; set; }
 
         // to test
+        
         public string DbPath { get; private set; }
 
         public Db()
         {
+            // do poprawy
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}Common.db";
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}AppDB.MDF";
         }
-        //
+        
+        
         public Db(DbContextOptions options) : base(options)
         {
         }
@@ -41,20 +44,21 @@ namespace Common.Models
             modelBuilder.Entity<Tasklist>().HasMany(c => c.Tasks).WithOne(p => p.Id).HasForeignKey(f => f.TaskId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Tasklist>().HasMany(c => c.TaskStatuses).WithOne(p => p.Id).HasForeignKey(f => f.TaskStatusId).OnDelete(DeleteBehavior.Cascade);
         }
+        /*
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
 
-       // protected override void OnConfiguring(DbContextOptionsBuilder options)
-      //  {
-
-       // }
-
+        }
+        */
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
 
-
-        // to test 
+       
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer($"Data Source={DbPath}");
-
+            //=> options.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SchoolDB;Trusted_Connection=True;");
+           // => options.UseSqlServer($"Data Source={DbPath}");
+            => options.UseSqlServer($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\VSv2\\ToDoApp\\Common\\AppDB.mdf;Integrated Security=True;Connect Timeout=30");
+        
         //
     }
     
