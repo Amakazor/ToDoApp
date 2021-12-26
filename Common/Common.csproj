@@ -21,13 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Include="AppDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-    <Page Include="AppDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
-  </ItemGroup>
-
 </Project>

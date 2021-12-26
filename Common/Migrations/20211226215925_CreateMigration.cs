@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Common.Migrations
 {
-    public partial class Create : Migration
+    public partial class CreateMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,13 +13,15 @@ namespace Common.Migrations
                 name: "TaskList",
                 columns: table => new
                 {
-                    id_TaskList_number = table.Column<int>(type: "int", nullable: false)
+                    Id_TaskList_number = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    OwnerUserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskList", x => x.id_TaskList_number);
+                    table.PrimaryKey("PK_TaskList", x => x.Id_TaskList_number);
                 });
 
             migrationBuilder.CreateTable(
@@ -26,7 +29,9 @@ namespace Common.Migrations
                 columns: table => new
                 {
                     TaskStatusId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +40,7 @@ namespace Common.Migrations
                         name: "FK_TaskStatus_TaskList_TaskStatusId",
                         column: x => x.TaskStatusId,
                         principalTable: "TaskList",
-                        principalColumn: "id_TaskList_number",
+                        principalColumn: "Id_TaskList_number",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -57,7 +62,7 @@ namespace Common.Migrations
                         name: "FK_User_TaskList_UserId",
                         column: x => x.UserId,
                         principalTable: "TaskList",
-                        principalColumn: "id_TaskList_number",
+                        principalColumn: "Id_TaskList_number",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -66,8 +71,10 @@ namespace Common.Migrations
                 columns: table => new
                 {
                     TaskId = table.Column<int>(type: "int", nullable: false),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    AuthorUserId = table.Column<int>(type: "int", nullable: true),
                     StatusTaskStatusId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -77,34 +84,60 @@ namespace Common.Migrations
                         name: "FK_Task_TaskList_TaskId",
                         column: x => x.TaskId,
                         principalTable: "TaskList",
-                        principalColumn: "id_TaskList_number",
+                        principalColumn: "Id_TaskList_number",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Task_TaskStatus_StatusTaskStatusId",
                         column: x => x.StatusTaskStatusId,
                         principalTable: "TaskStatus",
                         principalColumn: "TaskStatusId");
+                    table.ForeignKey(
+                        name: "FK_Task_User_AuthorUserId",
+                        column: x => x.AuthorUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Task_AuthorUserId",
+                table: "Task",
+                column: "AuthorUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Task_StatusTaskStatusId",
                 table: "Task",
                 column: "StatusTaskStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskList_OwnerUserId",
+                table: "TaskList",
+                column: "OwnerUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TaskList_User_OwnerUserId",
+                table: "TaskList",
+                column: "OwnerUserId",
+                principalTable: "User",
+                principalColumn: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Task");
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_TaskList_UserId",
+                table: "User");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Task");
 
             migrationBuilder.DropTable(
                 name: "TaskStatus");
 
             migrationBuilder.DropTable(
                 name: "TaskList");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

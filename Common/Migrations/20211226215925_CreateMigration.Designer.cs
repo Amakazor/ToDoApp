@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Common.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20211223132746_Create")]
-    partial class Create
+    [Migration("20211226215925_CreateMigration")]
+    partial class CreateMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,10 +29,17 @@ namespace Common.Migrations
                     b.Property<int?>("TaskId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AuthorUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid>("Guid")
+                        .HasMaxLength(128)
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -44,6 +51,8 @@ namespace Common.Migrations
 
                     b.HasKey("TaskId");
 
+                    b.HasIndex("AuthorUserId");
+
                     b.HasIndex("StatusTaskStatusId");
 
                     b.ToTable("Task");
@@ -51,18 +60,27 @@ namespace Common.Migrations
 
             modelBuilder.Entity("Common.Models.Tasklist", b =>
                 {
-                    b.Property<int>("id_TaskList_number")
+                    b.Property<int>("Id_TaskList_number")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id_TaskList_number"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_TaskList_number"), 1L, 1);
+
+                    b.Property<Guid>("Guid")
+                        .HasMaxLength(128)
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.HasKey("id_TaskList_number");
+                    b.Property<int?>("OwnerUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_TaskList_number");
+
+                    b.HasIndex("OwnerUserId");
 
                     b.ToTable("TaskList");
                 });
@@ -71,6 +89,15 @@ namespace Common.Migrations
                 {
                     b.Property<int?>("TaskStatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<Guid>("Guid")
+                        .HasMaxLength(128)
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -117,6 +144,10 @@ namespace Common.Migrations
 
             modelBuilder.Entity("Common.Models.Task", b =>
                 {
+                    b.HasOne("Common.Models.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorUserId");
+
                     b.HasOne("Common.Models.TaskStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusTaskStatusId");
@@ -127,9 +158,20 @@ namespace Common.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Author");
+
                     b.Navigation("Id");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Common.Models.Tasklist", b =>
+                {
+                    b.HasOne("Common.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Common.Models.TaskStatus", b =>

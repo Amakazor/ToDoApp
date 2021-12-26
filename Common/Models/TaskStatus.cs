@@ -20,20 +20,21 @@ namespace Common.Models
 
         [Required]
         [StringLength(128)]
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
 
         [MaxLength(64)]
         [Required]
         public string Name { get; set; }
 
-        [NotMapped]
-        public Color Color { get; set; }
+        [MaxLength(64)]
+        [Required]
+        public string Color { get; set; }
 
         public TaskStatus()
         {
         }
 
-        public TaskStatus(Guid guid, string name, Color color)
+        public TaskStatus(Guid guid, string name, string color)
         {
             this.Guid = guid;
             this.Name = name;

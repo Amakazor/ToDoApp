@@ -19,7 +19,7 @@ namespace Common.Models
 
         [Required]
         [StringLength(128)]
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
 
         [MaxLength(64)]
         [Required]
@@ -29,10 +29,8 @@ namespace Common.Models
         [StringLength(128)]
         public string Description { get; set; }
 
-        [MaxLength(64)]
-        [Required]
-        public User Author { get; }
-       
+        public User Author { get; set; }
+      
         public TaskStatus Status { get; set; }
 
         public Task()
