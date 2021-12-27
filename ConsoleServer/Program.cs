@@ -9,7 +9,13 @@ namespace ConsoleServer
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello Arek");
             ConnectionConfig.Run();
-            TcpHelper.Listen(); // Start listening. 
+            /*
+            TcpHelper.Listen(); // Start listening.
+            
+            SocketServer server = new SocketServer(host, socketNo);
+            server.Initialize();
+            server.AcceptsRequests();
+            server.Close();*/
         }
     }
 }

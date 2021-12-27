@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace ConsoleServer
 {
-    class TcpHelper
+    class TcpHelper ////////// nieużywane \\\\\\\\\\\\\
     {
         private static TcpListener listener { get; set; }
         private static bool accept { get; set; } = false;
