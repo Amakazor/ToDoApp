@@ -8,7 +8,7 @@ namespace ConsoleServer
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello Arek");
-            TcpHelper.StartServer(443);
+            ConnectionConfig.Run();
             TcpHelper.Listen(); // Start listening. 
         }
     }
