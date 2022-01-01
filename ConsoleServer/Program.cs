@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ConsoleServer
 {
-    class Program
+    class MainServer
     {
         static void Main(string[] args)
         {
