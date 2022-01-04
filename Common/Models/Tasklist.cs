@@ -1,45 +1,39 @@
-﻿using Common.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-
+using System.Runtime.Serialization;
 
 namespace Common.Models
 {
-
+    [DataContract()]
     [Table("TaskList")]
     public class Tasklist
     {
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id_TaskList_number { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        public Guid Guid { get; set; }
+        [DataMember(IsRequired = true)]
+        public int? TaskListID { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Name { get; set; }
 
-        [MaxLength(64)]
+        [Required]
+        [DataMember(IsRequired = true)]
         public User Owner { get; set; }
-       
-        //public HashSet<User> Members { get; }
-        public HashSet<User> Members { get; set; } = new HashSet<User>();
 
+        [Required]
+        [DataMember(IsRequired = true)]
+        public HashSet<User> Members { get; set; }
 
-        //public HashSet<Task> Tasks { get; }
-        public HashSet<Task> Tasks { get; set; } = new HashSet<Task>();
+        [Required]
+        [DataMember(IsRequired = true)]
+        public HashSet<Task> Tasks { get; set; }
 
-        public HashSet<TaskStatus> TaskStatuses { get; set; } = new HashSet<TaskStatus>();
-        //public HashSet<TaskStatus> TaskStatuses { get; set; } = new HashSet<TaskStatus>();
-        //public TaskStatus TaskStatuses { get; set; }
-
+        [Required]
+        [DataMember(IsRequired = true)]
+        public HashSet<TaskStatus> TaskStatuses { get; set; }
     }
 }

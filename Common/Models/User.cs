@@ -1,53 +1,52 @@
-﻿using Common.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using Common.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-
+using System.Runtime.Serialization;
 
 namespace Common.Models
 {
-
+    [DataContract()]
     [Table("User")]
-    
     public class User
     {
-        [ForeignKey(nameof(UserId))]
-        public Tasklist Id { get; set; }
-        public int? UserId { get; set; }
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataMember(IsRequired = true)]
+        public int? UserID { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string FirstName { get; set; }
 
         [MaxLength(64)]
         [Required]
-        public string Lastname { get; set; }
+        [DataMember(IsRequired = true)]
+        public string LastName { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Username { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Password { get; set; }
 
         [Required]
+        [DataMember(IsRequired = true)]
         public UserType UserType { get; set; }
-        public User()
+
+
+        public User(string firstName, string lastName, string username, string password, UserType userType)
         {
-        }
-        public User(string firstName, string lastName, string username,string password, UserType userType, Tasklist id)
-        {
-            this.FirstName = firstName;
-            this.Lastname = lastName;
-            this.Username = username;
-            this.Password = password;
-            this.UserType = userType;
-            this.Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Username = username;
+            Password = password;
+            UserType = userType;
         }
     }
 }
