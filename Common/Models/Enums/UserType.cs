@@ -1,4 +1,4 @@
-﻿namespace Common.Entities.Enums
+﻿namespace Common.Models.Enums
 {
     public enum UserType
     {

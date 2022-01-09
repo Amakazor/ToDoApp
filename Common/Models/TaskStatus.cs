@@ -1,44 +1,37 @@
-﻿using Common.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Drawing;
-
+using System.Runtime.Serialization;
 
 namespace Common.Models
 {
+    [DataContract()]
     [Table("TaskStatus")]
     public class TaskStatus
     {
-        [ForeignKey(nameof(TaskStatusId))]
-        public Tasklist Id { get; set; }
-        public int? TaskStatusId { get; set; }
-
+        [Key]
         [Required]
-        [StringLength(128)]
-        public Guid Guid { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataMember(IsRequired = true)]
+        public int? TaskStatusID { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Name { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Color { get; set; }
 
         public TaskStatus()
         {
         }
 
-        public TaskStatus(Guid guid, string name, string color)
+        public TaskStatus(string name, string color)
         {
-            this.Guid = guid;
-            this.Name = name;
-            this.Color = color;
+            Name = name;
+            Color = color;
         }
     }
 }

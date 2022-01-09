@@ -1,49 +1,67 @@
-﻿using Common.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-
+using System.Runtime.Serialization;
 
 namespace Common.Models
 {
     [Table("Task")]
+    [DataContract()]
     public class Task
     {
-        [ForeignKey(nameof(TaskId))]
-        public Tasklist Id { get; set; }
-        public int? TaskId { get; set; }
-
+        [Key]
         [Required]
-        [StringLength(128)]
-        public Guid Guid { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DataMember(IsRequired = true)]
+        public int? TaskId { get; set; }
 
         [MaxLength(64)]
         [Required]
+        [DataMember(IsRequired = true)]
         public string Name { get; set; }
 
         [Required]
         [StringLength(128)]
+        [DataMember(IsRequired = true)]
         public string Description { get; set; }
 
+        [Required]
+        [DataMember(IsRequired = true)]
         public User Author { get; set; }
-      
+
+        [Required]
+        [DataMember(IsRequired = true)]
         public TaskStatus Status { get; set; }
 
-        public Task()
+        public Task(string name, string description, User author, TaskStatus status)
         {
+            Name = name;
+            Description = description;
+            Author = author;
+            Status = status;
         }
 
-        public Task(Guid guid, string name, string description, User author, TaskStatus status)
+        private Task()
+        {}
+
+        public override bool Equals(object obj)
         {
-            this.Guid = guid;
-            this.Name = name;
-            this.Description = description;
-            this.Author = author;
-            this.Status = status;
+            return Equals(obj as Task);
+        }
+
+        public bool Equals(Task other)
+        {
+            return other != null &&
+                   TaskId.Equals(other.TaskId);
+        }
+
+        public override int GetHashCode()
+        {
+            return TaskId.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Name + ": " + Status.ToString();
         }
     }
 }
