@@ -28,11 +28,16 @@ namespace ConsoleServer
                 server = new TcpListener(IPAddress.Loopback, port);
                 server.Start();
 
+                // informacja testowa 
+                Console.WriteLine(IPAddress.Loopback);
+                // ////////////////////
+
                 byte[] buffer = new byte[256];
                 string data;
 
                 while (true)
                 {
+
                     Console.Write("Waiting for a connection... ");
 
                     TcpClient client = server.AcceptTcpClient();
