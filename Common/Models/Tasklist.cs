@@ -88,6 +88,31 @@ namespace Common.Models
                 .Include(tl => tl.TaskStatuses)
                 .Include(tl => tl.Tasks).ToHashSet();
 
+            foreach (Tasklist tasklist in tasklists)
+            {
+                tasklist.Owner.TasklistsMembered = new HashSet<Tasklist>();
+                tasklist.Owner.TasklistsOwned = new HashSet<Tasklist>();
+                tasklist.Owner.ClearPassword();
+
+                foreach (User member in tasklist.Members)
+                {
+                    member.TasklistsMembered = new HashSet<Tasklist>();
+                    member.TasklistsOwned = new HashSet<Tasklist>();
+                    member.ClearPassword();
+                }
+
+                foreach (Task task in tasklist.Tasks)
+                {
+                    task.Tasklist = null;
+                    task.Author.ClearPassword();
+                }
+
+                foreach (TaskStatus taskstatus in tasklist.TaskStatuses)
+                {
+                    taskstatus.Tasklist = null;
+                }
+            }
+
             return tasklists;
         }
 
