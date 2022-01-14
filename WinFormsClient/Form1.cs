@@ -10,6 +10,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using Microsoft.VisualBasic;
+
 
 
 namespace WinFormsClient
@@ -17,18 +19,19 @@ namespace WinFormsClient
     public partial class Form1 : Form
     {
         //TcpClient client = new TcpClient();
-        private TcpClient client;
-        public StreamReader STR;
-        public StreamWriter STW;
-        public string recieve;
-        public String TextToSend;
+        //private TcpClient client;
+        //public StreamReader STR;
+        //public StreamWriter STW;
+        //public string recieve;
+        //public String TextToSend;
 
-        private static int port = 32000;
-        private static string ip_address = "127.0.0.1";
-
+        private static int port;
+        private static string ip_address = IPAddress.Loopback.ToString();
+        //public static string InputBox(string Prompt, string Title = "", string DefaultResponse = "", int XPos = -1, int YPos = -1);
         public Form1()
         {
             InitializeComponent();
+            Ip_address.Text = ip_address;
             /*IPAddress[] localIP = Dns.GetHostAddresses(Dns.GetHostName());
             //Ip_address.Text = address.ToString();
             
@@ -42,8 +45,7 @@ namespace WinFormsClient
                     
                 }
             }*/
-            Ip_address.Text = ip_address;
-            Port.Text = 32000.ToString();   
+            //Port.Text = 32000.ToString();   
         }
 
         private void Ip_address_TextChanged(object sender, EventArgs e)
@@ -53,13 +55,31 @@ namespace WinFormsClient
 
         private void Connect_button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Client conn");
-            MessageBox.Show(Ip_address.ToString());
-            MessageBox.Show(Port.Text);
-            SocketClient client = new SocketClient(ip_address.ToString(), port);
+            while (true)
+            {
+                try
+                {
+                    while (!int.TryParse(Port.Text, out port))
+                    {
+                        string input = Interaction.InputBox("Enter port", "Wrong port, try again.", "...", 10, 10);
+                        Port.Text = input;
+                        
+                    }
+                    //MessageBox.Show(("Client connection ...\n" + "\nIP: " + Ip_address.ToString() + "\n PORT: " + Port.ToString()));
+
+                    SocketClient client = new SocketClient(ip_address.ToString(), port);
+                    Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
+                    client.Connect();                    
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            
+
             //SocketClient client = new SocketClient(IPAddress.Parse(Ip_address), int.Parse(Port.Text));
-            Logs.LogEntry($"Connecting.....{ip_address}: {port}");
-            client.Connect();
             /*
             client = new TcpClient();
             IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(Ip_address.Text), int.Parse(Port.Text));
@@ -126,6 +146,16 @@ namespace WinFormsClient
             {
                 MessageBox.Show("Error..... " + ex.StackTrace);
             }*/
+
+        }
+
+        private void Status_Info_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }

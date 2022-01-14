@@ -24,18 +24,23 @@ namespace WinFormsClient
 
             public void Connect()
             {
+
                 try
                 {
-                    TcpClient client = new TcpClient();
-
-                    //client.Connect(new IPEndPoint(IPAddress.Parse(host), socketNo));
-                    client.Connect(IPAddress.Parse(host), socketNo);
-                    //client.ConnectAsync(IPAddress.Parse(host), socketNo);
-                    NetworkStream nstr = client.GetStream();
+                TcpClient client = new TcpClient();
+                client.Connect(IPAddress.Parse(host), socketNo);
+                MessageBox.Show("Connected");
+                Logs.LogEntry($"Connected {host}: {socketNo}");
+                Users form2 = new Users();
+                form2.Show();
+                //client.Connect(new IPEndPoint(IPAddress.Parse(host), socketNo));
+                //Status_Info.text
+                //client.ConnectAsync(IPAddress.Parse(host), socketNo);
+                NetworkStream nstr = client.GetStream();
 
                     StreamReader sr = new StreamReader(new BufferedStream(nstr), Encoding.UTF8);
                     StreamWriter sw = new StreamWriter(nstr, Encoding.UTF8);
-
+                /*
                     while (true)
                     {
                         try
@@ -62,14 +67,16 @@ namespace WinFormsClient
                             MessageBox.Show(e.ToString());
                             break;
                         }
-                    }
+                    }*/
                     nstr.Close();
                     client.Close();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.ToString());
+                    //MessageBox.Show("Error... " + e.ToString());
+                    MessageBox.Show("Correct your IP number or port number and try again");
                 }
+                
             }
         }
     }
