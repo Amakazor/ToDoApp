@@ -15,6 +15,10 @@ namespace ConsoleServer
     {
         static void Main(string[] args)
         {
+            User.CreateAdminIfNotExists();
+            User.CreateUserIfNotExists();
+            User.CreateHelpdeskIfNotExists();
+
             while (true)
             {
                 TcpListener server = null;
