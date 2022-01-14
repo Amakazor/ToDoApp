@@ -47,7 +47,7 @@ namespace WinFormsClient
                     Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
                     client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));
                     //client.SendRequest(new UserLoginRequest(new("admin", "admin")));
-                    MessageBox.Show("Connected");
+                    //MessageBox.Show("Connected");
                     break;
                 }
                 catch (Exception ex)
