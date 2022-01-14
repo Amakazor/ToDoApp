@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using System.Linq;
+using Common.Security;
 
 namespace Common.Models
 {
@@ -30,7 +32,7 @@ namespace Common.Models
         [DataMember(IsRequired = true)]
         public string Username { get; set; }
 
-        [MaxLength(64)]
+        [MaxLength(1024)]
         [Required]
         [DataMember(IsRequired = true)]
         public string Password { get; set; }
@@ -47,6 +49,50 @@ namespace Common.Models
             Username = username;
             Password = password;
             UserType = userType;
+        }
+
+        public User(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
+
+        public bool Authenticate()
+        {
+            using DatabaseContext dbContext = new();
+            User dbUser = (from user in dbContext.Users where user.Username.Equals(Username) select user).FirstOrDefault();
+            bool authentic = dbUser != null && HashedPassword.VerifySaltedPassword(Password, dbUser.Password);
+
+            if (authentic)
+            {
+                FirstName = dbUser.FirstName;
+                LastName = dbUser.LastName;
+                UserType = dbUser.UserType;
+            }
+
+            return authentic;
+        }
+
+        public bool Register()
+        {
+            using DatabaseContext dbContext = new();
+            User dbUser = (from user in dbContext.Users where user.Username.Equals(Username) select user).FirstOrDefault();
+
+            if (dbUser is null)
+            {
+                HashPassword();
+                dbContext.Users.Add(this);
+                dbContext.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void HashPassword()
+        {
+            Password = HashedPassword.GenerateSaltedHash(16, Password);
         }
     }
 }

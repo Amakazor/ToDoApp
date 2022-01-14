@@ -1,17 +1,32 @@
 ﻿using System.Runtime.Serialization;
 using Common.Communication.Requests.Enums;
-using Common.Communication.Responses;
+using Common.Communication.Requests.RequestEvents;
 
 namespace Common.Communication.Requests
 {
     [DataContract()]
-    class PingRequest : Request
+    public class PingRequest : Request
     {
+        [DataMember(IsRequired = true)]
+        public string Message { get; private set; }
+
+        public PingRequest(string username, string password, string message): base(username, password)
+        {
+            Message = message;
+        }
+
+        [DataMember(IsRequired = true)]
         public override RequestType Type => RequestType.PING;
 
-        public override Response GetResponse()
+        protected new PingRequestEventArgs eventArgs;
+
+        public override PingRequestEventArgs EventArgs
         {
-            return new PingResponse();
+            get
+            {
+                if (eventArgs == null) eventArgs = new(new(Username, Password), Message);
+                return eventArgs;
+            }
         }
     }
 }

@@ -4,6 +4,9 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Common.Communication.Responses;
+using Common.Communication.Requests.RequestEvents;
+using Common.Models;
 
 namespace ConsoleServer
 {
@@ -12,8 +15,25 @@ namespace ConsoleServer
         static void Main(string[] args)
         {
             TcpListener server = null;
-            ConcreteRequestHandler requestHandler = new();
-            
+            RequestProcessor requestProcessor = new();
+
+            requestProcessor.RequestedPing += RequestProcessor_RequestedPing;
+            requestProcessor.RequestedLogin += RequestProcessor_RequestedLogin;
+            requestProcessor.RequestedRegister += RequestProcessor_RequestedRegister;
+            requestProcessor.RequestedTasklistGet += RequestProcessor_RequestedTasklistGet;
+            requestProcessor.RequestedTasklistAdd += RequestProcessor_RequestedTasklistAdd;
+            requestProcessor.RequestedTasklistDelete += RequestProcessor_RequestedTasklistDelete;
+            requestProcessor.RequestedTasklistUpdate += RequestProcessor_RequestedTasklistUpdate;
+            requestProcessor.RequestedMemberAdd += RequestProcessor_RequestedMemberAdd;
+            requestProcessor.RequestedMemberRemove += RequestProcessor_RequestedMemberRemove;
+            requestProcessor.RequestedOwnershipGive += RequestProcessor_RequestedOwnershipGive;
+            requestProcessor.RequestedTaskAdd += RequestProcessor_RequestedTaskAdd;
+            requestProcessor.RequestedTaskDelete += RequestProcessor_RequestedTaskDelete;
+            requestProcessor.RequestedTaskUpdate += RequestProcessor_RequestedTaskUpdate;
+            requestProcessor.RequestedTaskstatusAdd += RequestProcessor_RequestedTaskstatusAdd;
+            requestProcessor.RequestedTaskstatusDelete += RequestProcessor_RequestedTaskstatusDelete;
+            requestProcessor.RequestedTaskstatusUpdate += RequestProcessor_RequestedTaskstatusUpdate;
+
             try
             {
                 Console.WriteLine("Enter server port:");
@@ -28,9 +48,6 @@ namespace ConsoleServer
                 server = new TcpListener(IPAddress.Loopback, port);
                 server.Start();
 
-                // informacja testowa 
-                Console.WriteLine(IPAddress.Loopback);
-                // ////////////////////
 
                 byte[] buffer = new byte[256];
                 string data;
@@ -51,7 +68,7 @@ namespace ConsoleServer
                         data = Encoding.UTF8.GetString(buffer, 0, i);
                         Console.WriteLine("Received: {0}", data);
 
-                        byte[] message = Encoding.UTF8.GetBytes(Serializer.SerializeObject(RequestProcessor.Process(data, requestHandler)));
+                        byte[] message = Encoding.UTF8.GetBytes(Serializer.SerializeObject<Response>(requestProcessor.Process(data)));
 
                         stream.Write(message, 0, message.Length);
                         Console.WriteLine("Sent: {0}", data);
@@ -68,6 +85,162 @@ namespace ConsoleServer
             {
                 server?.Stop();
             }
+        }
+
+        private static void RequestProcessor_RequestedTaskstatusUpdate(object sender, TaskStatusRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryUpdateTaskstatus(e.User, e.Tasklist, e.TaskStatus);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTaskstatusDelete(object sender, TaskStatusRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryDeleteTaskstatus(e.User, e.Tasklist, e.TaskStatus);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTaskstatusAdd(object sender, TaskStatusRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryAddTaskstatus(e.User, e.Tasklist, e.TaskStatus);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTaskUpdate(object sender, TaskRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryUpdateTask(e.User, e.Tasklist, e.Task);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTaskDelete(object sender, TaskRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryRemoveTask(e.User, e.Tasklist, e.Task);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTaskAdd(object sender, TaskRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryAddTask(e.User, e.Tasklist, e.Task);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedOwnershipGive(object sender, MemberRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryChangeOwner(e.User, e.Tasklist, e.Member);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedMemberRemove(object sender, MemberRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryRemoveMember(e.User, e.Tasklist, e.Member);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedMemberAdd(object sender, MemberRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryAddMember(e.User, e.Tasklist, e.Member);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTasklistDelete(object sender, TasklistRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryDelete(e.User, e.Tasklist);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTasklistAdd(object sender, TasklistRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryAdd(e.User, e.Tasklist);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTasklistUpdate(object sender, TasklistRequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Tasklist.TryUpdate(e.User, e.Tasklist);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTasklistGet(object sender, RequestEventArgs e)
+        {
+            if (!e.User.Authenticate()) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedRegister(object sender, UserRequestEventArgs e)
+        {
+            e.ResponseHandle = new LoginResponse(e.User.Register(), e.User);
+        }
+
+        private static void RequestProcessor_RequestedLogin(object sender, UserRequestEventArgs e)
+        {
+            e.ResponseHandle = new LoginResponse(e.User.Authenticate(), e.User);
+        }
+
+        private static void RequestProcessor_RequestedPing(object sender, PingRequestEventArgs e)
+        {
+            e.ResponseHandle = new PingResponse(e.Message);
         }
     }
 }

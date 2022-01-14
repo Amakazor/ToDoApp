@@ -6,9 +6,9 @@ using System.Runtime.Serialization;
 namespace Common.Communication.Responses
 {
     [DataContract()]
-    public class PingResponse : Response
+    public class ErrorResponse : Response
     {
-        public PingResponse(string message) : base()
+        public ErrorResponse(string message) : base()
         {
             Message = message;
         }
@@ -19,9 +19,9 @@ namespace Common.Communication.Responses
         [DataMember(IsRequired = true)]
         public override ResponseType Type => ResponseType.PING;
 
-        protected new PingResponsetEventArgs eventArgs;
+        protected new ErrorResponseEventArgs eventArgs;
 
-        public override PingResponsetEventArgs EventArgs
+        public override ErrorResponseEventArgs EventArgs
         {
             get
             {

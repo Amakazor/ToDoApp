@@ -2,6 +2,25 @@
 {
     public enum RequestType
     {
-        PING
+        PING,
+
+        USER_LOGIN,
+        USER_REGISTER,
+
+        TASKLIST_GET,
+        TASKLIST_ADD,
+        TASKLIST_DELETE,
+        TASKLIST_UPDATE,
+        TASKLIST_MEMBER_ADD,
+        TASKLIST_MEMBER_REMOVE,
+        TASKLIST_OWNERSHIP_GIVE,
+
+        TASK_ADD,
+        TASK_DELETE,
+        TASK_UPDATE,
+
+        TASKSTATUS_ADD,
+        TASKSTATUS_DELETE,
+        TASKSTATUS_UPDATE
     }
 }

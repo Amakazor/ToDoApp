@@ -1,25 +1,52 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using Common.Communication.Requests.Enums;
-using Common.Communication.Responses;
+using Common.Communication.Requests.RequestEvents;
 
 namespace Common.Communication.Requests
 {
     [DataContract()]
-    public class Request
+    [KnownType(typeof(PingRequest))]
+    [KnownType(typeof(UserLoginRequest))]
+    [KnownType(typeof(UserRegisterRequest))]
+    [KnownType(typeof(TasklistGetRequest))]
+    [KnownType(typeof(TasklistAddRequest))]
+    [KnownType(typeof(TasklistDeleteRequest))]
+    [KnownType(typeof(TasklistUpdateRequest))]
+    [KnownType(typeof(MemberAddRequest))]
+    [KnownType(typeof(MemberDeleteRequest))]
+    [KnownType(typeof(OwnershipGiveRequest))]
+    [KnownType(typeof(TaskAddRequest))]
+    [KnownType(typeof(TaskDeleteRequest))]
+    [KnownType(typeof(TaskUpdateRequest))]
+    [KnownType(typeof(TaskstatusAddRequest))]
+    [KnownType(typeof(TaskstatusDeleteRequest))]
+    [KnownType(typeof(TaskstatusUpdateRequest))]
+    public abstract class Request
     {
         [DataMember(IsRequired = true)]
-        public string Username { get; }
+        protected string Username { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public string Password { get; }
+        protected string Password { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public virtual RequestType Type { get; }
+        public virtual RequestType Type { get; private set; }
 
-        public virtual Response GetResponse()
+        protected RequestEventArgs eventArgs;
+
+        protected Request(string username, string password)
         {
-            throw new NotImplementedException();
+            Username = username;
+            Password = password;
+        }
+
+        public virtual RequestEventArgs EventArgs 
+        { 
+            get 
+            { 
+                if (eventArgs == null) eventArgs = new(new(Username, Password));
+                return eventArgs;
+            } 
         }
     }
 }

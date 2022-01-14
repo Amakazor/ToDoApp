@@ -3,6 +3,9 @@
     public enum ResponseType
     {
         PING,
-        NULL
+        NULL,
+        LOGIN,
+        TASKLIST_GET,
+        ERROR
     }
 }
