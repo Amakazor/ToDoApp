@@ -77,6 +77,11 @@ namespace WinFormsClient
         {
             if (e.UserLogged)
             {
+                First_name = e.User.FirstName;
+                Last_name = e.User.LastName;
+                User_name = e.User.Username;
+                User_password = e.User.Password;
+
                 //Login successfull
                 switch (e.User.UserType)
                 {
@@ -100,10 +105,6 @@ namespace WinFormsClient
                 //Login not successfull or logged-out
                 MessageBox.Show("Correct your login or password and try again");
             }
-            First_name = e.User.FirstName;
-            Last_name = e.User.LastName;
-            User_name = e.User.Username;
-            User_password = e.User.Password;
         }
 
         private void ResponseProcessor_RespondedNull(object sender, Common.Communication.Responses.ResponseEvents.NullResponseEventArgs e)
