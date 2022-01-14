@@ -92,7 +92,7 @@ namespace WinFormsClient
             else
             {
                 //Login not successfull or logged-out
-                //MessageBox.Show("Correct your IP number or port number and try again");
+                MessageBox.Show("Correct your login or password and try again");
             }
         }
 
@@ -107,7 +107,7 @@ namespace WinFormsClient
         {
             //returns message, can be used to test if server exists
             //Debug.WriteLine(e.Message);
-            MessageBox.Show("Connected" + e.Message);
+            MessageBox.Show("Connected");
             Users users = new Users();
             users.Show();
         }
