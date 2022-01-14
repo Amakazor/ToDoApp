@@ -255,7 +255,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedLogin(object sender, UserRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            e.ResponseHandle = new LoginResponse(authenticatedUser.Authenticate() is not null, authenticatedUser);
+            e.ResponseHandle = new LoginResponse(authenticatedUser is not null, authenticatedUser);
         }
 
         private static void RequestProcessor_RequestedPing(object sender, PingRequestEventArgs e)
