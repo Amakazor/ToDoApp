@@ -43,5 +43,54 @@ namespace Common.Models
 
         [DataMember(IsRequired = true)]
         public User LastChangedBy { get; set; }
+
+        public static HashSet<Ticket> GetAll(User user)
+        {
+            if (user.UserType == UserType.HELPDESK)
+            {
+                using DatabaseContext dbContext = new();
+                return (from ti in dbContext.Tickets select ti).ToHashSet();
+            }
+            else
+            {
+                using DatabaseContext dbContext = new();
+                return (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).ToHashSet();
+            }
+        }
+
+        public static string TryUpdate(User user, Ticket ticket)
+        {
+            if (ticket is null) return "Tasklist doesn't exists";
+            if (user.UserType != UserType.HELPDESK) return "User is not a helpdesk member";
+
+            using DatabaseContext dbContext = new();
+
+            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).FirstOrDefault();
+
+            if (dbTicket is null) return "Tasklist doesn't exists";
+
+            dbTicket.Status = ticket.Status;
+            dbTicket.LastChangedBy = user;
+
+            dbContext.SaveChanges();
+
+            return null;
+        }
+
+        public static string TryAdd(User user, Ticket ticket)
+        {
+            if (ticket is null) return "Ticket doesn't exists";
+
+            using DatabaseContext dbContext = new();
+
+            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).FirstOrDefault();
+
+            if (dbTicket is not null) return "Ticket already exists";
+
+            dbContext.Tickets.Add(ticket);
+            dbContext.SaveChanges();
+
+            return null;
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace Common.Communication.Responses
     [KnownType(typeof(LoginResponse))]
     [KnownType(typeof(TasklistGetResponse))]
     [KnownType(typeof(ErrorResponse))]
+    [KnownType(typeof(TicketGetAllResponse))]
+    [KnownType(typeof(UserGetAllResponse))]
     public abstract class Response
     {
         [DataMember(IsRequired = true)]

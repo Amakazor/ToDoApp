@@ -32,6 +32,16 @@ namespace Common.Communication
         public event EventHandler<TaskStatusRequestEventArgs> RequestedTaskstatusDelete;
         public event EventHandler<TaskStatusRequestEventArgs> RequestedTaskstatusUpdate;
 
+        public event EventHandler<TicketRequestEventArgs> RequestedTicketAdd;
+        public event EventHandler<RequestEventArgs> RequestedTicketsGet;
+
+        public event EventHandler<RequestEventArgs> HelpdeskRequestedTicketGet;
+        public event EventHandler<TicketRequestEventArgs> HelpdeskRequestedTicketUpdate;
+
+        public event EventHandler<RequestEventArgs> AdminRequestedUserGet;
+        public event EventHandler<AdminUserEventArgs> AdminRequestedUserActivate;
+        public event EventHandler<AdminUserEventArgs> AdminRequestedUserDelete;
+
         public Response Process(string requestData)
         {
             return FireEvent(Serializer.DeserializeObject<Request>(requestData).Type switch
@@ -58,6 +68,16 @@ namespace Common.Communication
                 RequestType.TASKSTATUS_ADD => Serializer.DeserializeObject<TaskstatusAddRequest>(requestData),
                 RequestType.TASKSTATUS_DELETE => Serializer.DeserializeObject<TaskstatusDeleteRequest>(requestData),
                 RequestType.TASKSTATUS_UPDATE => Serializer.DeserializeObject<TaskstatusUpdateRequest>(requestData),
+
+                RequestType.TICKED_ADD => Serializer.DeserializeObject<TickedAddRequest>(requestData),
+                RequestType.USER_TICKET_GETALL => Serializer.DeserializeObject<UserTicketGetAllRequest>(requestData),
+
+                RequestType.HELPDESK_TICKET_GETALL => Serializer.DeserializeObject<HelpdeskTicketGetAllRequest>(requestData),
+                RequestType.HELPDESK_TICKET_UPDATE => Serializer.DeserializeObject<HelpdeskTicketUpdateRequest>(requestData),
+
+                RequestType.ADMIN_USER_GETALL => Serializer.DeserializeObject<AdminUserGetAllRequest>(requestData),
+                RequestType.ADMIN_USER_ACTIVATE => Serializer.DeserializeObject<AdminUserActivateRequest>(requestData),
+                RequestType.ADMIN_USER_DELETE => Serializer.DeserializeObject<AdminUserDeleteRequest>(requestData),
                 _ => throw new NotImplementedException(),
             }).EventArgs.ResponseHandle;
         }
@@ -113,7 +133,27 @@ namespace Common.Communication
                     break;
                 case RequestType.TASKSTATUS_UPDATE:
                     RequestedTaskstatusUpdate(this, (TaskStatusRequestEventArgs)request.EventArgs);
-
+                    break;
+                case RequestType.TICKED_ADD:
+                    RequestedTicketAdd(this, (TicketRequestEventArgs)request.EventArgs);
+                    break;
+                case RequestType.USER_TICKET_GETALL:
+                    RequestedTicketsGet(this, (RequestEventArgs)request.EventArgs);
+                    break;
+                case RequestType.HELPDESK_TICKET_GETALL:
+                    HelpdeskRequestedTicketGet(this, (RequestEventArgs)request.EventArgs);
+                    break;
+                case RequestType.HELPDESK_TICKET_UPDATE:
+                    HelpdeskRequestedTicketUpdate(this, (TicketRequestEventArgs)request.EventArgs);
+                    break;
+                case RequestType.ADMIN_USER_GETALL:
+                    AdminRequestedUserGet(this, (RequestEventArgs)request.EventArgs);
+                    break;
+                case RequestType.ADMIN_USER_ACTIVATE:
+                    AdminRequestedUserActivate(this, (AdminUserEventArgs)request.EventArgs);
+                    break;
+                case RequestType.ADMIN_USER_DELETE:
+                    AdminRequestedUserDelete(this, (AdminUserEventArgs)request.EventArgs);
                     break;
             }
 
