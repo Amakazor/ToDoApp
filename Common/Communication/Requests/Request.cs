@@ -20,7 +20,13 @@ namespace Common.Communication.Requests
     [KnownType(typeof(TaskUpdateRequest))]
     [KnownType(typeof(TaskstatusAddRequest))]
     [KnownType(typeof(TaskstatusDeleteRequest))]
-    [KnownType(typeof(TaskstatusUpdateRequest))]
+    [KnownType(typeof(TickedAddRequest))]
+    [KnownType(typeof(UserTicketGetAllRequest))]
+    [KnownType(typeof(HelpdeskTicketGetAllRequest))]
+    [KnownType(typeof(HelpdeskTicketUpdateRequest))]
+    [KnownType(typeof(AdminUserGetAllRequest))]
+    [KnownType(typeof(AdminUserActivateRequest))]
+    [KnownType(typeof(AdminUserDeleteRequest))]
     public abstract class Request
     {
         [DataMember(IsRequired = true)]

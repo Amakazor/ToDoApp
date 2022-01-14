@@ -42,6 +42,13 @@ namespace ConsoleServer
                 requestProcessor.RequestedTaskstatusAdd += RequestProcessor_RequestedTaskstatusAdd;
                 requestProcessor.RequestedTaskstatusDelete += RequestProcessor_RequestedTaskstatusDelete;
                 requestProcessor.RequestedTaskstatusUpdate += RequestProcessor_RequestedTaskstatusUpdate;
+                requestProcessor.RequestedTicketAdd += RequestProcessor_RequestedTicketAdd;
+                requestProcessor.RequestedTicketsGet += RequestProcessor_RequestedTicketsGet;
+                requestProcessor.HelpdeskRequestedTicketGet += RequestProcessor_HelpdeskRequestedTicketGet;
+                requestProcessor.HelpdeskRequestedTicketUpdate += RequestProcessor_HelpdeskRequestedTicketUpdate;
+                requestProcessor.AdminRequestedUserGet += RequestProcessor_AdminRequestedUserGet;
+                requestProcessor.AdminRequestedUserActivate += RequestProcessor_AdminRequestedUserActivate;
+                requestProcessor.AdminRequestedUserDelete += RequestProcessor_AdminRequestedUserDelete;
 
                 try
                 {
@@ -90,6 +97,86 @@ namespace ConsoleServer
                 {
                     server?.Stop();
                 }
+            }
+        }
+
+        private static void RequestProcessor_AdminRequestedUserDelete(object sender, AdminUserEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = User.Delete(e.User, e.ModifiedUser);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_AdminRequestedUserActivate(object sender, AdminUserEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = User.Activate(e.User, e.ModifiedUser);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_AdminRequestedUserGet(object sender, RequestEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = User.IsAdminError(authenticatedUser);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_HelpdeskRequestedTicketUpdate(object sender, TicketRequestEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Ticket.TryUpdate(e.User, e.Ticket);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_HelpdeskRequestedTicketGet(object sender, RequestEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTicketAdd(object sender, TicketRequestEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                string error = Ticket.TryAdd(e.User, e.Ticket);
+                if (error is not null) e.ResponseHandle = new ErrorResponse(error);
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+            }
+        }
+
+        private static void RequestProcessor_RequestedTicketsGet(object sender, RequestEventArgs e)
+        {
+            User authenticatedUser = e.User.Authenticate();
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            else
+            {
+                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(e.User));
             }
         }
 

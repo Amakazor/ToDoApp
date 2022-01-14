@@ -33,6 +33,8 @@ namespace WinFormsClient
             responseProcessor.RespondedLogin += ResponseProcessor_RespondedLogin;
             responseProcessor.RespondedTasklistGet += ResponseProcessor_RespondedTasklistGet;
             responseProcessor.RespondedError += ResponseProcessor_RespondedError;
+            responseProcessor.RespondedTicketsGetAll += ResponseProcessor_RespondedTicketsGetAll;
+            responseProcessor.RespondedUsersGetAll += ResponseProcessor_RespondedUsersGetAll;
         }
 
         public void SendRequest(Request request)
@@ -133,6 +135,16 @@ namespace WinFormsClient
             MessageBox.Show("Connected");
             Users users = new Users();
             users.Show();
+        }
+
+        private void ResponseProcessor_RespondedUsersGetAll(object sender, Common.Communication.Responses.ResponseEvents.UserGetAllResponseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ResponseProcessor_RespondedTicketsGetAll(object sender, Common.Communication.Responses.ResponseEvents.TicketGetAllResponseEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
