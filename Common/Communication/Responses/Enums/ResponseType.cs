@@ -6,6 +6,8 @@
         NULL,
         LOGIN,
         TASKLIST_GET,
-        ERROR
+        ERROR,
+        TICKET_GET_ALL,
+        USER_GET_ALL
     }
 }

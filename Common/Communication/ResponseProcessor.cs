@@ -13,6 +13,9 @@ namespace Common.Communication
         public event EventHandler<LoginResponseEventArgs> RespondedLogin;
         public event EventHandler<TasklistGetResponseEventArgs> RespondedTasklistGet;
         public event EventHandler<ErrorResponseEventArgs> RespondedError;
+        public event EventHandler<TicketGetAllResponseEventArgs> RespondedTicketsGetAll;
+        public event EventHandler<UserGetAllResponseEventArgs> RespondedUsersGetAll;
+
 
         public void Process(string responseData)
         {
@@ -23,6 +26,8 @@ namespace Common.Communication
                 ResponseType.LOGIN => Serializer.DeserializeObject<LoginResponse>(responseData),
                 ResponseType.TASKLIST_GET => Serializer.DeserializeObject<TasklistGetResponse>(responseData),
                 ResponseType.ERROR => Serializer.DeserializeObject<ErrorResponse>(responseData),
+                ResponseType.TICKET_GET_ALL => Serializer.DeserializeObject<TicketGetAllResponse>(responseData),
+                ResponseType.USER_GET_ALL => Serializer.DeserializeObject<UserGetAllResponse>(responseData),
                 _ => throw new NotImplementedException(),
             });
         }
@@ -45,6 +50,12 @@ namespace Common.Communication
                     break;
                 case ResponseType.ERROR:
                     RespondedError(this, (ErrorResponseEventArgs)response.EventArgs);
+                    break;
+                case ResponseType.TICKET_GET_ALL:
+                    RespondedTicketsGetAll(this, (TicketGetAllResponseEventArgs)response.EventArgs);
+                    break;
+                case ResponseType.USER_GET_ALL:
+                    RespondedUsersGetAll(this, (UserGetAllResponseEventArgs)response.EventArgs);
                     break;
             }
         }

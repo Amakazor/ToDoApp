@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Linq;
 using Common.Security;
 using System.Collections.Generic;
+using System;
 
 namespace Common.Models
 {
@@ -164,6 +165,24 @@ namespace Common.Models
             return null;
         }
 
+        public static string Delete(User admin, User modifiedUser)
+        {
+            if (admin is null) return "Admin doesn't exists";
+            if (modifiedUser is null) return "User to activate doesn't exists";
+
+            using DatabaseContext dbContext = new();
+            User dbAdmin = (from user in dbContext.Users where user.Username.Equals(admin.Username) select user).FirstOrDefault();
+            User dbUser = (from user in dbContext.Users where user.Username.Equals(modifiedUser.Username) select user).FirstOrDefault();
+            if (dbAdmin is null) return "Admin doesn't exists";
+            if (dbUser is null) return "User to delete doesn't exists";
+            if (dbAdmin.UserType != UserType.ADMIN) return "Admin is not admin";
+
+            dbContext.Users.Remove(dbUser);
+            dbContext.SaveChanges();
+
+            return null;
+        }
+
         public static string IsAdminError(User admin)
         {
             if (admin is null) return "Admin doesn't exists";
@@ -176,8 +195,9 @@ namespace Common.Models
             return null;
         }
 
-        public static HashSet<User> GetAll()
+        public static HashSet<User> GetAll(User admin)
         {
+
             using DatabaseContext dbContext = new();
             return (from user in dbContext.Users select user).ToHashSet();
         }
