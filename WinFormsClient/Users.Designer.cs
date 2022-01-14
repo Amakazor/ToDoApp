@@ -37,17 +37,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(44, 9);
+            this.label1.Location = new System.Drawing.Point(50, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 15);
+            this.label1.Size = new System.Drawing.Size(117, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select user type ";
             // 
             // User
             // 
-            this.User.Location = new System.Drawing.Point(17, 37);
+            this.User.Location = new System.Drawing.Point(19, 49);
+            this.User.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.User.Name = "User";
-            this.User.Size = new System.Drawing.Size(151, 23);
+            this.User.Size = new System.Drawing.Size(173, 31);
             this.User.TabIndex = 1;
             this.User.Text = "User";
             this.User.UseVisualStyleBackColor = true;
@@ -55,9 +56,10 @@
             // 
             // Admin
             // 
-            this.Admin.Location = new System.Drawing.Point(17, 66);
+            this.Admin.Location = new System.Drawing.Point(19, 88);
+            this.Admin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Admin.Name = "Admin";
-            this.Admin.Size = new System.Drawing.Size(151, 23);
+            this.Admin.Size = new System.Drawing.Size(173, 31);
             this.Admin.TabIndex = 2;
             this.Admin.Text = "Admin";
             this.Admin.UseVisualStyleBackColor = true;
@@ -65,9 +67,10 @@
             // 
             // Helpdesk
             // 
-            this.Helpdesk.Location = new System.Drawing.Point(17, 95);
+            this.Helpdesk.Location = new System.Drawing.Point(19, 127);
+            this.Helpdesk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Helpdesk.Name = "Helpdesk";
-            this.Helpdesk.Size = new System.Drawing.Size(151, 23);
+            this.Helpdesk.Size = new System.Drawing.Size(173, 31);
             this.Helpdesk.TabIndex = 3;
             this.Helpdesk.Text = "Helpdesk";
             this.Helpdesk.UseVisualStyleBackColor = true;
@@ -75,13 +78,14 @@
             // 
             // Users
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(208, 146);
+            this.ClientSize = new System.Drawing.Size(221, 182);
             this.Controls.Add(this.Helpdesk);
             this.Controls.Add(this.Admin);
             this.Controls.Add(this.User);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Users";
             this.Text = "Users";
             this.ResumeLayout(false);

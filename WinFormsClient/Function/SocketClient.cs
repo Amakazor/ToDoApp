@@ -98,12 +98,14 @@ namespace WinFormsClient
         {
             //returns nothing, only for testing
             throw new NotImplementedException();
+            
         }
 
         private void ResponseProcessor_RespondedPing(object sender, Common.Communication.Responses.ResponseEvents.PingResponsetEventArgs e)
         {
             //returns message, can be used to test if server exists
             Debug.WriteLine(e.Message);
+            
         }
     }
 }
