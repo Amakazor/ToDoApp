@@ -22,6 +22,33 @@ namespace Common.Models
         [DataMember(IsRequired = true)]
         public string Name { get; set; }
 
+        public static void CreateDummyDataIfNotExists()
+        {
+            User user = new User("user", "user");
+            user = user.Authenticate();
+            
+            User admin = new User("admin", "admin");
+            admin = admin.Authenticate();
+
+            using DatabaseContext dbContext = new();
+            if ((from ts in dbContext.Tasklists where ts.Owner.UserID == user.UserID select ts).FirstOrDefault() == null)
+            {
+                User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us).FirstOrDefault();
+                User dbAdmin = (from us in dbContext.Users where us.UserID == admin.UserID select us).FirstOrDefault();
+
+                TaskStatus taskStatus1 = new("TaskStatus1", "ff0000");
+                TaskStatus taskStatus2 = new("TaskStatus2", "0000ff");
+
+                Task task1 = new("Task1", "Task1Desc", dbUser, taskStatus1);
+                Task task2 = new("Task2", "Task2Desc", dbAdmin, taskStatus2);
+                Task task3 = new("Task3", "Task3Desc", dbUser, taskStatus1);
+
+                Tasklist tasklist = new("TEST", dbUser, new HashSet<User> { dbUser, dbAdmin }, new HashSet<Task> { task1, task2, task3 }, new HashSet<TaskStatus> { taskStatus1, taskStatus2 });
+                dbContext.Tasklists.Add(tasklist);
+                dbContext.SaveChanges();
+            }
+        }
+
         [Required]
         [DataMember(IsRequired = true)]
         public User Owner { get; set; }
@@ -37,6 +64,19 @@ namespace Common.Models
         [Required]
         [DataMember(IsRequired = true)]
         public HashSet<TaskStatus> TaskStatuses { get; set; }
+
+        private Tasklist()
+        {
+        }
+
+        public Tasklist(string name, User owner, HashSet<User> members, HashSet<Task> tasks, HashSet<TaskStatus> taskStatuses)
+        {
+            Name = name;
+            Owner = owner;
+            Members = members;
+            Tasks = tasks;
+            TaskStatuses = taskStatuses;
+        }
 
         public static HashSet<Tasklist> GetAll(User user)
         {
@@ -54,8 +94,11 @@ namespace Common.Models
 
             Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
 
+            User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us).FirstOrDefault();
             if (dbTasklist is not null) return "Tasklist already exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!tasklist.Owner.Equals(user)) return "User is not the owner";
+
+            tasklist.Owner = dbUser;
 
             dbContext.Tasklists.Add(tasklist);
             dbContext.SaveChanges();

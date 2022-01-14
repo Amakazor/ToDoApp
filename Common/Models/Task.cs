@@ -44,22 +44,6 @@ namespace Common.Models
         private Task()
         {}
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Task);
-        }
-
-        public bool Equals(Task other)
-        {
-            return other != null &&
-                   TaskId.Equals(other.TaskId);
-        }
-
-        public override int GetHashCode()
-        {
-            return TaskId.GetHashCode();
-        }
-
         public override string ToString()
         {
             return Name + ": " + Status.ToString();

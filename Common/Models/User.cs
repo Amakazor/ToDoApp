@@ -46,6 +46,14 @@ namespace Common.Models
         [DataMember(IsRequired = true)]
         public UserStatus UserStatus { get; set; }
 
+        [Required]
+        [DataMember(IsRequired = true)]
+        public HashSet<Tasklist> TasklistsOwned { get; set; }
+
+        [Required]
+        [DataMember(IsRequired = true)]
+        public HashSet<Tasklist> TasklistsMembered { get; set; }
+
 
         public User(string firstName, string lastName, string username, string password, UserType userType, UserStatus userStatus)
         {
@@ -63,7 +71,7 @@ namespace Common.Models
             Password = password;
         }
 
-        public bool Authenticate()
+        public User Authenticate()
         {
             using DatabaseContext dbContext = new();
             User dbUser = (from user in dbContext.Users where user.Username.Equals(Username) select user).FirstOrDefault();
@@ -71,12 +79,10 @@ namespace Common.Models
 
             if (authentic)
             {
-                FirstName = dbUser.FirstName;
-                LastName = dbUser.LastName;
-                UserType = dbUser.UserType;
+                return dbUser;
             }
 
-            return authentic;
+            return null;
         }
 
         public bool Register()
