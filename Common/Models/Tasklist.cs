@@ -11,6 +11,19 @@ namespace Common.Models
     [Table("TaskList")]
     public class Tasklist
     {
+        public Tasklist()
+        {
+
+        }
+        public Tasklist(string name, User owner, HashSet<User> members, HashSet<Task> tasks, HashSet<TaskStatus> taskStatuses)
+        {
+            Name = name;
+            Owner = owner;
+            Members = members;
+            Tasks = tasks;
+            TaskStatuses = taskStatuses;
+        }
+
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

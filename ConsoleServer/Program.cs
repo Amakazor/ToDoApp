@@ -18,7 +18,13 @@ namespace ConsoleServer
             User.CreateAdminIfNotExists();
             User.CreateUserIfNotExists();
             User.CreateHelpdeskIfNotExists();
-
+            /*
+            User admin = new("admin", "admin");
+            admin.Authenticate();
+            
+            string error = Tasklist.TryAdd(new("admin", "admin"), new("firstlist", admin, new System.Collections.Generic.HashSet<User> {admin}, null,null));
+            Console.WriteLine(error);
+            */
             while (true)
             {
                 TcpListener server = null;

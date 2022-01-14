@@ -65,7 +65,10 @@ namespace WinFormsClient
         private void ResponseProcessor_RespondedTasklistGet(object sender, Common.Communication.Responses.ResponseEvents.TasklistGetResponseEventArgs e)
         {
             //returns all tasklist for the user, only for testing
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            MessageBox.Show(e.Tasklists.ToString().Trim());
+            MessageBox.Show(e.Tasklists.Comparer.ToString());
+            
         }
 
         private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
@@ -89,6 +92,7 @@ namespace WinFormsClient
                         break;
                 }
             }
+            
             else
             {
                 //Login not successfull or logged-out

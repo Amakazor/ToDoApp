@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using WinFormsClient.User_types;
-using WinFormsClient;
 using Common.Communication.Requests;
 
 namespace WinFormsClient
 {
     public partial class Users : Form
     {
-        private string login,password;
+        public static string login,password;
 
         public Users()
         {
@@ -33,6 +32,11 @@ namespace WinFormsClient
         {
             Helpdesk form = new Helpdesk();
             form.Show();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void button1_Click(object sender, EventArgs e)

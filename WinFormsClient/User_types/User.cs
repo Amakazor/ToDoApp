@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Common.Communication.Requests;
 
 namespace WinFormsClient.User_types
 {
@@ -28,6 +23,8 @@ namespace WinFormsClient.User_types
             Uname.Visible = false;
             label6.Visible = false;
             Pass.Visible = false;
+            SocketClient client = new(Form1.ip_address, Form1.port);
+            client.SendRequest(new TasklistGetRequest(Users.login,Users.password));
         }
         private void Show (int i)
         {
