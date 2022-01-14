@@ -22,6 +22,8 @@ namespace WinFormsClient
 
         public static string User_name, User_password, First_name, Last_name;
 
+        //public static string[,] tab = new string[10,10];
+
         public SocketClient(string host, int port)
         {
             Host = host;
@@ -73,14 +75,21 @@ namespace WinFormsClient
             MessageBox.Show(e.Tasklists.ToString());
             MessageBox.Show(e.Tasklists.Comparer.ToString());
             //e.Tasklists.             
-            DisplaySet(e.Tasklists);
-
+            //DisplaySet(e.Tasklists);
+            
             void DisplaySet(HashSet<Common.Models.Tasklist> collection)
             {
+                int j = 0;
                 foreach (Common.Models.Tasklist i in collection)
-                {                   
-                   // MessageBox.Show(" {0}" + i.ToString());
-                    MessageBox.Show(" {0}" + i.Name);
+                {
+                    if (i.Name != null)
+                    {
+                        SocketClient.tab[j, 0] = i.Name;
+                        MessageBox.Show(tab[j, 0]);
+                        j++;
+                    }
+                    //MessageBox.Show(i.Name);   
+                                           
                 }
 
             }
