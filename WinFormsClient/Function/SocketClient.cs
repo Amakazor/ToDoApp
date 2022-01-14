@@ -70,21 +70,18 @@ namespace WinFormsClient
             //throw new NotImplementedException();
             MessageBox.Show(e.Tasklists.ToString());
             MessageBox.Show(e.Tasklists.Comparer.ToString());
+            //e.Tasklists.             
+            DisplaySet(e.Tasklists);
 
-
-
-            /*
-            HashSet<Common.Models.Tasklist> numbers = new HashSet<Common.Models.Tasklist>(e.Tasklists);         
-           // DisplaySet(numbers);
-
-            void DisplaySet(HashSet<int> collection)
+            void DisplaySet(HashSet<Common.Models.Tasklist> collection)
             {
-                foreach (int i in collection)
+                foreach (Common.Models.Tasklist i in collection)
                 {                   
-                    MessageBox.Show(" {0}" + i.ToString());
+                   // MessageBox.Show(" {0}" + i.ToString());
+                    MessageBox.Show(" {0}" + i.Name);
                 }
 
-            }*/
+            }
 
         }
 

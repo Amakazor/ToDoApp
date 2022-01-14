@@ -47,6 +47,7 @@
             this.Createtask = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.editTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +56,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newTaskToolStripMenuItem,
+            this.editTaskToolStripMenuItem,
             this.aboutToolStripMenuItem,
             this.logOutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -151,7 +153,7 @@
             // Pass
             // 
             this.Pass.AutoSize = true;
-            this.Pass.Location = new System.Drawing.Point(604, 97);
+            this.Pass.Location = new System.Drawing.Point(626, 97);
             this.Pass.Name = "Pass";
             this.Pass.Size = new System.Drawing.Size(57, 15);
             this.Pass.TabIndex = 8;
@@ -189,9 +191,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(532, 97);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 15);
+            this.label6.Size = new System.Drawing.Size(88, 15);
             this.label6.TabIndex = 12;
-            this.label6.Text = "Password:";
+            this.label6.Text = "Password hash:";
             // 
             // Createtask
             // 
@@ -223,11 +225,17 @@
             this.label7.Text = "Select one name in task lists:";
             this.label7.Visible = false;
             // 
+            // editTaskToolStripMenuItem
+            // 
+            this.editTaskToolStripMenuItem.Name = "editTaskToolStripMenuItem";
+            this.editTaskToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.editTaskToolStripMenuItem.Text = "Edit Task";
+            // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 355);
+            this.ClientSize = new System.Drawing.Size(719, 675);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.Createtask);
@@ -276,5 +284,6 @@
         private System.Windows.Forms.Button Createtask;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripMenuItem editTaskToolStripMenuItem;
     }
 }
