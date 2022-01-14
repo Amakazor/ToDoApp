@@ -14,9 +14,10 @@ namespace WinFormsClient
 {
     public partial class SocketClient
     {
-
         private string Host { get; }
+        //private string Host;
         private int Port { get; }
+        //private int Port;
         private ResponseProcessor responseProcessor { get; }
 
         public SocketClient(string host, int port)
@@ -37,10 +38,6 @@ namespace WinFormsClient
             try
             {
                 TcpClient client = new TcpClient(Host, Port);
-                MessageBox.Show("Connected");
-                Logs.LogEntry($"Connected {Host}: {Port}");
-
-
 
                 BinaryWriter writer = new(client.GetStream(), Encoding.UTF8, true);
                 writer.Write(Serializer.SerializeObject<Request>(request));
@@ -49,16 +46,14 @@ namespace WinFormsClient
                 BinaryReader reader = new(client.GetStream(), Encoding.UTF8, true);
                 responseProcessor.Process(reader.ReadString());
                 reader.Dispose();
-
            
                 client.Close();
             }
-            catch (SocketException)
+            catch (SocketException q)
             {
-                //MessageBox.Show("Error... " + e.ToString());
                 MessageBox.Show("Correct your IP number or port number and try again");
+                //MessageBox.Show(q.Message);
             }
-
         }
 
         private void ResponseProcessor_RespondedError(object sender, Common.Communication.Responses.ResponseEvents.ErrorResponseEventArgs e)
@@ -81,23 +76,23 @@ namespace WinFormsClient
                 switch (e.User.UserType)
                 {
                     case UserType.USER:
-                        User form = new User();
-                        form.Show();
+                        User user = new User();
+                        user.Show();
                         break;
                     case UserType.ADMIN:
-                        Admin form1 = new Admin();
-                        form1.Show();
+                        Admin admin = new Admin();
+                        admin.Show();
                         break;
                     case UserType.HELPDESK:
-                        Helpdesk form2 = new Helpdesk();
-                        form2.Show();
+                        Helpdesk helpdesk = new Helpdesk();
+                        helpdesk.Show();
                         break;
                 }
             }
             else
             {
                 //Login not successfull or logged-out
-                MessageBox.Show("Correct your IP number or port number and try again");
+                //MessageBox.Show("Correct your IP number or port number and try again");
             }
         }
 
@@ -111,8 +106,10 @@ namespace WinFormsClient
         private void ResponseProcessor_RespondedPing(object sender, Common.Communication.Responses.ResponseEvents.PingResponsetEventArgs e)
         {
             //returns message, can be used to test if server exists
-            Debug.WriteLine(e.Message);
-            
+            //Debug.WriteLine(e.Message);
+            MessageBox.Show("Connected" + e.Message);
+            Users users = new Users();
+            users.Show();
         }
     }
 }
