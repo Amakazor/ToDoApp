@@ -8,6 +8,7 @@ using Common.Serialization;
 using Common.Models.Enums;
 using System.Diagnostics;
 using System.IO;
+using WinFormsClient.User_types;
 
 namespace WinFormsClient
 {
@@ -38,8 +39,7 @@ namespace WinFormsClient
                 TcpClient client = new TcpClient(Host, Port);
                 MessageBox.Show("Connected");
                 Logs.LogEntry($"Connected {Host}: {Port}");
-                //Users form2 = new Users();
-                //form2.Show();
+
 
 
                 BinaryWriter writer = new(client.GetStream(), Encoding.UTF8, true);
@@ -81,16 +81,23 @@ namespace WinFormsClient
                 switch (e.User.UserType)
                 {
                     case UserType.USER:
+                        User form = new User();
+                        form.Show();
                         break;
                     case UserType.ADMIN:
+                        Admin form1 = new Admin();
+                        form1.Show();
                         break;
                     case UserType.HELPDESK:
+                        Helpdesk form2 = new Helpdesk();
+                        form2.Show();
                         break;
                 }
             }
             else
             {
                 //Login not successfull or logged-out
+                MessageBox.Show("Correct your IP number or port number and try again");
             }
         }
 

@@ -68,7 +68,8 @@ namespace WinFormsClient
 
                     SocketClient client = new SocketClient(ip_address.ToString(), port);
                     Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
-                    client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));                    
+                    client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));
+                    client.SendRequest(new UserLoginRequest(new("admin", "admin")));
                     break;
                 }
                 catch (Exception ex)
