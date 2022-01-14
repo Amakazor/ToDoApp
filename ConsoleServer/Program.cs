@@ -7,6 +7,7 @@ using System.Text;
 using Common.Communication.Responses;
 using Common.Communication.Requests.RequestEvents;
 using Common.Models;
+using System.IO;
 
 namespace ConsoleServer
 {
@@ -14,76 +15,75 @@ namespace ConsoleServer
     {
         static void Main(string[] args)
         {
-            TcpListener server = null;
-            RequestProcessor requestProcessor = new();
-
-            requestProcessor.RequestedPing += RequestProcessor_RequestedPing;
-            requestProcessor.RequestedLogin += RequestProcessor_RequestedLogin;
-            requestProcessor.RequestedRegister += RequestProcessor_RequestedRegister;
-            requestProcessor.RequestedTasklistGet += RequestProcessor_RequestedTasklistGet;
-            requestProcessor.RequestedTasklistAdd += RequestProcessor_RequestedTasklistAdd;
-            requestProcessor.RequestedTasklistDelete += RequestProcessor_RequestedTasklistDelete;
-            requestProcessor.RequestedTasklistUpdate += RequestProcessor_RequestedTasklistUpdate;
-            requestProcessor.RequestedMemberAdd += RequestProcessor_RequestedMemberAdd;
-            requestProcessor.RequestedMemberRemove += RequestProcessor_RequestedMemberRemove;
-            requestProcessor.RequestedOwnershipGive += RequestProcessor_RequestedOwnershipGive;
-            requestProcessor.RequestedTaskAdd += RequestProcessor_RequestedTaskAdd;
-            requestProcessor.RequestedTaskDelete += RequestProcessor_RequestedTaskDelete;
-            requestProcessor.RequestedTaskUpdate += RequestProcessor_RequestedTaskUpdate;
-            requestProcessor.RequestedTaskstatusAdd += RequestProcessor_RequestedTaskstatusAdd;
-            requestProcessor.RequestedTaskstatusDelete += RequestProcessor_RequestedTaskstatusDelete;
-            requestProcessor.RequestedTaskstatusUpdate += RequestProcessor_RequestedTaskstatusUpdate;
-
-            try
+            while (true)
             {
-                Console.WriteLine("Enter server port:");
-                int port;
-                while (!int.TryParse(Console.ReadLine(), out port))
+                TcpListener server = null;
+                RequestProcessor requestProcessor = new();
+
+                requestProcessor.RequestedPing += RequestProcessor_RequestedPing;
+                requestProcessor.RequestedLogin += RequestProcessor_RequestedLogin;
+                requestProcessor.RequestedRegister += RequestProcessor_RequestedRegister;
+                requestProcessor.RequestedTasklistGet += RequestProcessor_RequestedTasklistGet;
+                requestProcessor.RequestedTasklistAdd += RequestProcessor_RequestedTasklistAdd;
+                requestProcessor.RequestedTasklistDelete += RequestProcessor_RequestedTasklistDelete;
+                requestProcessor.RequestedTasklistUpdate += RequestProcessor_RequestedTasklistUpdate;
+                requestProcessor.RequestedMemberAdd += RequestProcessor_RequestedMemberAdd;
+                requestProcessor.RequestedMemberRemove += RequestProcessor_RequestedMemberRemove;
+                requestProcessor.RequestedOwnershipGive += RequestProcessor_RequestedOwnershipGive;
+                requestProcessor.RequestedTaskAdd += RequestProcessor_RequestedTaskAdd;
+                requestProcessor.RequestedTaskDelete += RequestProcessor_RequestedTaskDelete;
+                requestProcessor.RequestedTaskUpdate += RequestProcessor_RequestedTaskUpdate;
+                requestProcessor.RequestedTaskstatusAdd += RequestProcessor_RequestedTaskstatusAdd;
+                requestProcessor.RequestedTaskstatusDelete += RequestProcessor_RequestedTaskstatusDelete;
+                requestProcessor.RequestedTaskstatusUpdate += RequestProcessor_RequestedTaskstatusUpdate;
+
+                try
                 {
-                    Console.WriteLine("\nWrong port, try again.");
                     Console.WriteLine("Enter server port:");
-
-                }
-
-                server = new TcpListener(IPAddress.Loopback, port);
-                server.Start();
-
-
-                byte[] buffer = new byte[256];
-                string data;
-
-                while (true)
-                {
-
-                    Console.Write("Waiting for a connection... ");
-
-                    TcpClient client = server.AcceptTcpClient();
-                    Console.WriteLine("Connected!");
-
-                    NetworkStream stream = client.GetStream();
-                    int i;
-
-                    while((i = stream.Read(buffer, 0, buffer.Length)) != 0)
+                    int port;
+                    while (!int.TryParse(Console.ReadLine(), out port))
                     {
-                        data = Encoding.UTF8.GetString(buffer, 0, i);
-                        Console.WriteLine("Received: {0}", data);
+                        Console.WriteLine("\nWrong port, try again.");
+                        Console.WriteLine("Enter server port:");
 
-                        byte[] message = Encoding.UTF8.GetBytes(Serializer.SerializeObject<Response>(requestProcessor.Process(data)));
-
-                        stream.Write(message, 0, message.Length);
-                        Console.WriteLine("Sent: {0}", data);
                     }
 
-                    client.Close();
+                    server = new TcpListener(IPAddress.Loopback, port);
+                    server.Start();
+
+
+                    byte[] buffer = new byte[256];
+                    string data;
+
+                    while (true)
+                    {
+
+                        Console.Write("Waiting for a connection... ");
+
+                        TcpClient client = server.AcceptTcpClient();
+                        Console.WriteLine("Connected!");
+
+
+                        BinaryReader reader = new BinaryReader(client.GetStream(), Encoding.UTF8, true);
+                        data = reader.ReadString();
+                        Console.WriteLine("Received: {0}", data);
+
+                        string message = Serializer.SerializeObject<Response>(requestProcessor.Process(data));
+                        Console.WriteLine("Sent: {0}", message);
+                        BinaryWriter writer = new BinaryWriter(client.GetStream(), Encoding.UTF8, true);
+                        writer.Write(message);
+
+                        client.Close();
+                    }
                 }
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketException: {0}", e);
-            }
-            finally
-            {
-                server?.Stop();
+                catch (SocketException e)
+                {
+                    Console.WriteLine("SocketException: {0}", e);
+                }
+                finally
+                {
+                    server?.Stop();
+                }
             }
         }
 

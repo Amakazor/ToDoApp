@@ -19,7 +19,7 @@ namespace Common.Communication.Responses
         }
 
         [DataMember(IsRequired = true)]
-        public HashSet<Tasklist> Tasklists { get; }
+        public HashSet<Tasklist> Tasklists { get; private set; }
 
 
         [DataMember(IsRequired = true)]

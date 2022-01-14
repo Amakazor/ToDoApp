@@ -1,83 +1,110 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using Common.Communication;
+using Common.Communication.Requests;
+using Common.Serialization;
+using Common.Models.Enums;
+using System.Diagnostics;
+using System.IO;
 
 namespace WinFormsClient
 {
     public partial class SocketClient
     {
-        
-            String host;
-            int socketNo;
 
-            public SocketClient(String _host, int _socketNo)
+        private string Host { get; }
+        private int Port { get; }
+        private ResponseProcessor responseProcessor { get; }
+
+        public SocketClient(string host, int port)
+        {
+            Host = host;
+            Port = port;
+            responseProcessor = new();
+
+            responseProcessor.RespondedPing += ResponseProcessor_RespondedPing;
+            responseProcessor.RespondedNull += ResponseProcessor_RespondedNull;
+            responseProcessor.RespondedLogin += ResponseProcessor_RespondedLogin;
+            responseProcessor.RespondedTasklistGet += ResponseProcessor_RespondedTasklistGet;
+            responseProcessor.RespondedError += ResponseProcessor_RespondedError;
+        }
+
+        public void SendRequest(Request request)
+        {
+            try
             {
-                host = _host;
-                socketNo = _socketNo;
+                TcpClient client = new TcpClient(Host, Port);
+                MessageBox.Show("Connected");
+                Logs.LogEntry($"Connected {Host}: {Port}");
+                //Users form2 = new Users();
+                //form2.Show();
+
+
+                BinaryWriter writer = new(client.GetStream(), Encoding.UTF8, true);
+                writer.Write(Serializer.SerializeObject<Request>(request));
+                writer.Dispose();
+
+                BinaryReader reader = new(client.GetStream(), Encoding.UTF8, true);
+                responseProcessor.Process(reader.ReadString());
+                reader.Dispose();
+
+           
+                client.Close();
+            }
+            catch (SocketException)
+            {
+                //MessageBox.Show("Error... " + e.ToString());
+                MessageBox.Show("Correct your IP number or port number and try again");
             }
 
-            public void Connect()
+        }
+
+        private void ResponseProcessor_RespondedError(object sender, Common.Communication.Responses.ResponseEvents.ErrorResponseEventArgs e)
+        {
+            //returns error to show in box
+            throw new NotImplementedException();
+        }
+
+        private void ResponseProcessor_RespondedTasklistGet(object sender, Common.Communication.Responses.ResponseEvents.TasklistGetResponseEventArgs e)
+        {
+            //returns all tasklist for the user, only for testing
+            throw new NotImplementedException();
+        }
+
+        private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
+        {
+            if (e.UserLogged)
             {
-
-                try
+                //Login successfull
+                switch (e.User.UserType)
                 {
-                TcpClient client = new TcpClient();
-                client.Connect(IPAddress.Parse(host), socketNo);
-                MessageBox.Show("Connected");
-                Logs.LogEntry($"Connected {host}: {socketNo}");
-                Users form2 = new Users();
-                form2.Show();
-                //client.Connect(new IPEndPoint(IPAddress.Parse(host), socketNo));
-                //Status_Info.text
-                //client.ConnectAsync(IPAddress.Parse(host), socketNo);
-                NetworkStream nstr = client.GetStream();
-
-                    StreamReader sr = new StreamReader(new BufferedStream(nstr), Encoding.UTF8);
-                    StreamWriter sw = new StreamWriter(nstr, Encoding.UTF8);
-                /*
-                    while (true)
-                    {
-                        try
-                        {
-                            string data;
-                            MessageBox.Show("Enter text (q - exits): ");
-                            data = "wysyłka danych";
-                            //data = Console.ReadLine();
-
-                            if (data.CompareTo("q") == 0)
-                            {
-                                break;
-                            }
-
-
-                            sw.WriteLine(data);
-                            sw.Flush();
-                            MessageBox.Show("Send data: " + data);
-                            string recv = sr.ReadLine();
-                            MessageBox.Show("Recv data: " + recv);
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show(e.ToString());
-                            break;
-                        }
-                    }*/
-                    nstr.Close();
-                    client.Close();
+                    case UserType.USER:
+                        break;
+                    case UserType.ADMIN:
+                        break;
+                    case UserType.HELPDESK:
+                        break;
                 }
-                catch (Exception e)
-                {
-                    //MessageBox.Show("Error... " + e.ToString());
-                    MessageBox.Show("Correct your IP number or port number and try again");
-                }
-                
+            }
+            else
+            {
+                //Login not successfull or logged-out
             }
         }
+
+        private void ResponseProcessor_RespondedNull(object sender, Common.Communication.Responses.ResponseEvents.NullResponseEventArgs e)
+        {
+            //returns nothing, only for testing
+            throw new NotImplementedException();
+        }
+
+        private void ResponseProcessor_RespondedPing(object sender, Common.Communication.Responses.ResponseEvents.PingResponsetEventArgs e)
+        {
+            //returns message, can be used to test if server exists
+            Debug.WriteLine(e.Message);
+        }
     }
+}
 

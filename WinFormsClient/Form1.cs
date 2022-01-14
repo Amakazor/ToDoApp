@@ -11,8 +11,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.VisualBasic;
-
-
+using Common.Communication.Requests;
 
 namespace WinFormsClient
 {
@@ -69,7 +68,7 @@ namespace WinFormsClient
 
                     SocketClient client = new SocketClient(ip_address.ToString(), port);
                     Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
-                    client.Connect();                    
+                    client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));                    
                     break;
                 }
                 catch (Exception ex)

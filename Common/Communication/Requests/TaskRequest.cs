@@ -15,9 +15,9 @@ namespace Common.Communication.Requests
         }
 
         [DataMember(IsRequired = true)]
-        public Task Task { get; }
+        public Task Task { get; private set; }
         [DataMember(IsRequired = true)]
-        public Tasklist Tasklist { get; }
+        public Tasklist Tasklist { get; private set; }
 
         protected new TaskRequestEventArgs eventArgs;
 

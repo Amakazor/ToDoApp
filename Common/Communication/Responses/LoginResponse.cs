@@ -23,7 +23,7 @@ namespace Common.Communication.Responses
         protected bool UserValid { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public User User { get; }
+        public User User { get; private set; }
 
         [DataMember(IsRequired = true)]
         public override ResponseType Type => ResponseType.NULL;

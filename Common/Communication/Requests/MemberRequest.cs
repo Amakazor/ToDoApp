@@ -15,10 +15,10 @@ namespace Common.Communication.Requests
         }
 
         [DataMember(IsRequired = true)]
-        public User Member { get; }
+        public User Member { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public Tasklist Tasklist { get; }
+        public Tasklist Tasklist { get; private set; }
 
         protected new MemberRequestEventArgs eventArgs;
 
