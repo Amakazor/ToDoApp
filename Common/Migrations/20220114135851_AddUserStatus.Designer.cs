@@ -4,6 +4,7 @@ using Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Common.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220114135851_AddUserStatus")]
+    partial class AddUserStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,47 +113,6 @@ namespace Common.Migrations
                     b.ToTable("TaskStatus");
                 });
 
-            modelBuilder.Entity("Common.Models.Ticket", b =>
-                {
-                    b.Property<int?>("TicketId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TicketId"), 1L, 1);
-
-                    b.Property<int>("AuthorUserID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<int?>("LastChangedByUserID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("TicketId");
-
-                    b.HasIndex("AuthorUserID");
-
-                    b.HasIndex("LastChangedByUserID");
-
-                    b.ToTable("Tickets");
-                });
-
             modelBuilder.Entity("Common.Models.User", b =>
                 {
                     b.Property<int?>("UserID")
@@ -235,23 +196,6 @@ namespace Common.Migrations
                     b.HasOne("Common.Models.Tasklist", null)
                         .WithMany("TaskStatuses")
                         .HasForeignKey("TaskListID");
-                });
-
-            modelBuilder.Entity("Common.Models.Ticket", b =>
-                {
-                    b.HasOne("Common.Models.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Common.Models.User", "LastChangedBy")
-                        .WithMany()
-                        .HasForeignKey("LastChangedByUserID");
-
-                    b.Navigation("Author");
-
-                    b.Navigation("LastChangedBy");
                 });
 
             modelBuilder.Entity("Common.Models.User", b =>

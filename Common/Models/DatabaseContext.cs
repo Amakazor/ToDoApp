@@ -12,9 +12,9 @@ namespace Common.Models
         public DbSet<TaskStatus> TaskStatus { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Tasklist> Tasklists { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
                
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            //=> options.UseSqlServer($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToDoApp", "AppDB.mdf")};Integrated Security=True;Connect Timeout=30");
             => options.UseSqlServer($"Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=ToDoApp;Integrated Security=True;Connect Timeout=30");
     }
     
