@@ -26,7 +26,7 @@ namespace Common.Communication.Responses
         public User User { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public override ResponseType Type => ResponseType.NULL;
+        public override ResponseType Type => ResponseType.LOGIN;
 
         protected new LoginResponseEventArgs eventArgs;
 
