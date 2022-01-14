@@ -18,7 +18,7 @@ namespace Common.Security
 
         public static bool VerifySaltedPassword(string enteredPassword, string encodedPassword)
         {
-            string[] words = encodedPassword.Split(' ');
+            string[] words = encodedPassword.Split('-');
             var saltBytes = Convert.FromBase64String(words[0]);
             var rfc2898DeriveBytes = new Rfc2898DeriveBytes(enteredPassword, saltBytes, 10000);
             return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256)) == words[1];
