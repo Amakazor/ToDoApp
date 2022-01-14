@@ -85,6 +85,7 @@ namespace WinFormsClient
 
             }
 
+            DataStore.Instance.AllTasklists = e.Tasklists;
         }
 
         private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
@@ -144,7 +145,7 @@ namespace WinFormsClient
 
         private void ResponseProcessor_RespondedTicketsGetAll(object sender, Common.Communication.Responses.ResponseEvents.TicketGetAllResponseEventArgs e)
         {
-            throw new NotImplementedException();
+            DataStore.Instance.AllTickets = e.Tickets;
         }
     }
 }
