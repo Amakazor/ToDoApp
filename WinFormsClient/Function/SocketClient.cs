@@ -6,7 +6,7 @@ using Common.Communication;
 using Common.Communication.Requests;
 using Common.Serialization;
 using Common.Models.Enums;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 using WinFormsClient.User_types;
 
@@ -70,9 +70,24 @@ namespace WinFormsClient
         {
             //returns all tasklist for the user, only for testing
             //throw new NotImplementedException();
-            MessageBox.Show(e.Tasklists.ToString().Trim());
+            MessageBox.Show(e.Tasklists.ToString());
             MessageBox.Show(e.Tasklists.Comparer.ToString());
-            
+
+
+
+            /*
+            HashSet<Common.Models.Tasklist> numbers = new HashSet<Common.Models.Tasklist>(e.Tasklists);         
+           // DisplaySet(numbers);
+
+            void DisplaySet(HashSet<int> collection)
+            {
+                foreach (int i in collection)
+                {                   
+                    MessageBox.Show(" {0}" + i.ToString());
+                }
+
+            }*/
+
         }
 
         private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
