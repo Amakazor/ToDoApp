@@ -15,10 +15,10 @@ namespace Common.Communication.Requests
         }
 
         [DataMember(IsRequired = true)]
-        public TaskStatus TaskStatus { get; }
+        public TaskStatus TaskStatus { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public Tasklist Tasklist { get; }
+        public Tasklist Tasklist { get; private set; }
 
         protected new TaskStatusRequestEventArgs eventArgs;
 
