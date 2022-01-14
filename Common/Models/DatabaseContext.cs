@@ -22,6 +22,8 @@ namespace Common.Models
         {
             modelBuilder.Entity<User>().HasMany<Tasklist>(u => u.TasklistsOwned).WithOne(tl => tl.Owner).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<User>().HasMany<Tasklist>(u => u.TasklistsMembered).WithMany(tl => tl.Members);
+            modelBuilder.Entity<Tasklist>().HasMany<TaskStatus>(t => t.TaskStatuses).WithOne(ts => ts.Tasklist).OnDelete(DeleteBehavior.NoAction); ;
+            modelBuilder.Entity<Tasklist>().HasMany<Task>(t => t.Tasks).WithOne(ts => ts.Tasklist).OnDelete(DeleteBehavior.NoAction); ;
 
             base.OnModelCreating(modelBuilder);
 

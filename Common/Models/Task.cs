@@ -33,6 +33,10 @@ namespace Common.Models
         [DataMember(IsRequired = true)]
         public TaskStatus Status { get; set; }
 
+        [Required]
+        [DataMember(IsRequired = true)]
+        public Tasklist Tasklist { get; set; }
+
         public Task(string name, string description, User author, TaskStatus status)
         {
             Name = name;

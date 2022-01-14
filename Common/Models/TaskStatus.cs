@@ -24,6 +24,10 @@ namespace Common.Models
         [DataMember(IsRequired = true)]
         public string Color { get; set; }
 
+        [Required]
+        [DataMember(IsRequired = true)]
+        public Tasklist Tasklist { get; set; }
+
         public TaskStatus()
         {
         }

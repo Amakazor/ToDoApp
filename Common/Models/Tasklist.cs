@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -81,7 +82,11 @@ namespace Common.Models
         public static HashSet<Tasklist> GetAll(User user)
         {
             using DatabaseContext dbContext = new();
-            HashSet <Tasklist> tasklists = (from tl in dbContext.Tasklists where tl.Owner.UserID == user.UserID select tl).ToHashSet();
+            HashSet <Tasklist> tasklists = (from tl in dbContext.Tasklists where tl.Owner.UserID == user.UserID select tl)
+                .Include(tl => tl.Members)
+                .Include(tl => tl.Owner)
+                .Include(tl => tl.TaskStatuses)
+                .Include(tl => tl.Tasks).ToHashSet();
 
             return tasklists;
         }
