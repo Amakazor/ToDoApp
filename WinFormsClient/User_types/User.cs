@@ -28,9 +28,16 @@ namespace WinFormsClient.User_types
             label7.Visible = false;
             SocketClient client = new(Form1.ip_address, Form1.port);
             client.SendRequest(new TasklistGetRequest(Users.login,Users.password));
+            /*
+            for (int i = 0; i < SocketClient.tab.Length; i++)
+            {
+                if (SocketClient.tab[i,0] != null)
+                    checkedListBox1.Items.Insert(0, SocketClient.tab[i,0]);
+            }*/
         }
         private void Show (int i)
         {
+            
             switch (i)
             {
                 case 0:
