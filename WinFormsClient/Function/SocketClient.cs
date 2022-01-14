@@ -14,10 +14,13 @@ namespace WinFormsClient
 {
     public partial class SocketClient
     {
-
         private string Host { get; }
+        //private string Host;
         private int Port { get; }
+        //private int Port;
         private ResponseProcessor responseProcessor { get; }
+
+        public static string User_name, User_password, First_name, Last_name;
 
         public SocketClient(string host, int port)
         {
@@ -37,10 +40,6 @@ namespace WinFormsClient
             try
             {
                 TcpClient client = new TcpClient(Host, Port);
-                MessageBox.Show("Connected");
-                Logs.LogEntry($"Connected {Host}: {Port}");
-
-
 
                 BinaryWriter writer = new(client.GetStream(), Encoding.UTF8, true);
                 writer.Write(Serializer.SerializeObject<Request>(request));
@@ -49,16 +48,14 @@ namespace WinFormsClient
                 BinaryReader reader = new(client.GetStream(), Encoding.UTF8, true);
                 responseProcessor.Process(reader.ReadString());
                 reader.Dispose();
-
            
                 client.Close();
             }
-            catch (SocketException)
+            catch (SocketException q)
             {
-                //MessageBox.Show("Error... " + e.ToString());
                 MessageBox.Show("Correct your IP number or port number and try again");
+                //MessageBox.Show(q.Message);
             }
-
         }
 
         private void ResponseProcessor_RespondedError(object sender, Common.Communication.Responses.ResponseEvents.ErrorResponseEventArgs e)
@@ -70,7 +67,10 @@ namespace WinFormsClient
         private void ResponseProcessor_RespondedTasklistGet(object sender, Common.Communication.Responses.ResponseEvents.TasklistGetResponseEventArgs e)
         {
             //returns all tasklist for the user, only for testing
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            MessageBox.Show(e.Tasklists.ToString().Trim());
+            MessageBox.Show(e.Tasklists.Comparer.ToString());
+            
         }
 
         private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
@@ -81,24 +81,29 @@ namespace WinFormsClient
                 switch (e.User.UserType)
                 {
                     case UserType.USER:
-                        User form = new User();
-                        form.Show();
+                        User user = new User();
+                        user.Show();
                         break;
                     case UserType.ADMIN:
-                        Admin form1 = new Admin();
-                        form1.Show();
+                        Admin admin = new Admin();
+                        admin.Show();
                         break;
                     case UserType.HELPDESK:
-                        Helpdesk form2 = new Helpdesk();
-                        form2.Show();
+                        Helpdesk helpdesk = new Helpdesk();
+                        helpdesk.Show();
                         break;
                 }
             }
+            
             else
             {
                 //Login not successfull or logged-out
-                MessageBox.Show("Correct your IP number or port number and try again");
+                MessageBox.Show("Correct your login or password and try again");
             }
+            First_name = e.User.FirstName;
+            Last_name = e.User.LastName;
+            User_name = e.User.Username;
+            User_password = e.User.Password;
         }
 
         private void ResponseProcessor_RespondedNull(object sender, Common.Communication.Responses.ResponseEvents.NullResponseEventArgs e)
@@ -111,8 +116,10 @@ namespace WinFormsClient
         private void ResponseProcessor_RespondedPing(object sender, Common.Communication.Responses.ResponseEvents.PingResponsetEventArgs e)
         {
             //returns message, can be used to test if server exists
-            Debug.WriteLine(e.Message);
-            
+            //Debug.WriteLine(e.Message);
+            MessageBox.Show("Connected");
+            Users users = new Users();
+            users.Show();
         }
     }
 }

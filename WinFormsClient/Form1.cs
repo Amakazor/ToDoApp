@@ -17,34 +17,13 @@ namespace WinFormsClient
 {
     public partial class Form1 : Form
     {
-        //TcpClient client = new TcpClient();
-        //private TcpClient client;
-        //public StreamReader STR;
-        //public StreamWriter STW;
-        //public string recieve;
-        //public String TextToSend;
+        public static int port;
+        public static string ip_address = IPAddress.Loopback.ToString();
 
-        private static int port;
-        private static string ip_address = IPAddress.Loopback.ToString();
-        //public static string InputBox(string Prompt, string Title = "", string DefaultResponse = "", int XPos = -1, int YPos = -1);
         public Form1()
         {
             InitializeComponent();
-            Ip_address.Text = ip_address;
-            /*IPAddress[] localIP = Dns.GetHostAddresses(Dns.GetHostName());
-            //Ip_address.Text = address.ToString();
-            
-            foreach (IPAddress address in localIP)
-            {
-                if (address.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    Ip_address.Text = address.ToString();
-                    //break;
-                    //MessageBox.Show(address.ToString());
-                    
-                }
-            }*/
-            //Port.Text = 32000.ToString();   
+            Ip_address.Text = ip_address;  
         }
 
         private void Ip_address_TextChanged(object sender, EventArgs e)
@@ -64,12 +43,11 @@ namespace WinFormsClient
                         Port.Text = input;
                         
                     }
-                    //MessageBox.Show(("Client connection ...\n" + "\nIP: " + Ip_address.ToString() + "\n PORT: " + Port.ToString()));
-
-                    SocketClient client = new SocketClient(ip_address.ToString(), port);
+                    SocketClient client = new (ip_address, port);
                     Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
                     client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));
-                    client.SendRequest(new UserLoginRequest(new("admin", "admin")));
+                    //client.SendRequest(new UserLoginRequest(new("admin", "admin")));
+                    //MessageBox.Show("Connected");
                     break;
                 }
                 catch (Exception ex)
