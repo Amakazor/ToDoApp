@@ -105,17 +105,12 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti)
-                .Include(t => t.Author)
-                .FirstOrDefault();
-
             User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
                 .FirstOrDefault();
             
             User dbAuthor = (from u in dbContext.Users where u.Username == ticket.Author.Username select u)
                 .FirstOrDefault();
 
-            if (dbTicket is not null) return "Ticket already exists";
             if (dbAuthor is null) return "Author doesn't exist";
 
             ticket.Author = dbAuthor;

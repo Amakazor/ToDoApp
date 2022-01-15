@@ -97,6 +97,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.checkedListBox6 = new System.Windows.Forms.CheckedListBox();
+            this.label23 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -737,11 +739,32 @@
             this.label22.Text = "Name:";
             this.label22.Visible = false;
             // 
+            // checkedListBox6
+            // 
+            this.checkedListBox6.FormattingEnabled = true;
+            this.checkedListBox6.Location = new System.Drawing.Point(462, 51);
+            this.checkedListBox6.Name = "checkedListBox6";
+            this.checkedListBox6.Size = new System.Drawing.Size(189, 220);
+            this.checkedListBox6.TabIndex = 50;
+            this.checkedListBox6.SelectedIndexChanged += new System.EventHandler(this.checkedListBox6_SelectedIndexChanged_1);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(462, 33);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(84, 15);
+            this.label23.TabIndex = 51;
+            this.label23.Text = "Select a status:";
+            this.label23.Visible = false;
+            // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(741, 375);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.checkedListBox6);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
@@ -878,5 +901,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckedListBox checkedListBox6;
+        private System.Windows.Forms.Label label23;
     }
 }
