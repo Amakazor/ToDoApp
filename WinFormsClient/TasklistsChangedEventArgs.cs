@@ -6,11 +6,11 @@ namespace WinFormsClient
 {
     public class TasklistsChangedEventArgs : EventArgs
     {
-        public TasklistsChangedEventArgs(HashSet<Tasklist> tasklists)
+        public TasklistsChangedEventArgs(List<Tasklist> tasklists)
         {
             Tasklists = tasklists;
         }
 
-        public HashSet<Tasklist> Tasklists { get; set; }
+        public List<Tasklist> Tasklists { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Common.Communication.Requests;
@@ -8,9 +9,12 @@ namespace WinFormsClient.User_types
 {
     public partial class User : Form
     {
+            SocketClient client = new(Form1.ip_address, Form1.port);
         public User()
         {
             InitializeComponent();
+            DataStore.Instance.TakListsChanged += Instance_TakListsChanged;
+
             label1.Visible = false;
             textBox1.Visible = false;
             label2.Visible = false;
@@ -26,8 +30,12 @@ namespace WinFormsClient.User_types
             Pass.Visible = false;
             checkedListBox1.Visible = false;
             label7.Visible = false;
-            SocketClient client = new(Form1.ip_address, Form1.port);
             client.SendRequest(new TasklistGetRequest(Users.login,Users.password));
+
+
+
+
+
             /*
             for (int i = 0; i < SocketClient.tab.Length; i++)
             {
@@ -35,6 +43,20 @@ namespace WinFormsClient.User_types
                     checkedListBox1.Items.Insert(0, SocketClient.tab[i,0]);
             }*/
         }
+
+        private void Instance_TakListsChanged(object sender, TasklistsChangedEventArgs e)
+        {
+            checkedListBox1.Items.Clear();
+            //throw new NotImplementedException();
+            foreach (Common.Models.Tasklist i in e.Tasklists)
+            {
+                //i.Name
+                checkedListBox1.Items.Insert(0, i.Name);
+               
+            }
+            
+        }
+
         private void Show (int i)
         {
             
@@ -169,7 +191,8 @@ namespace WinFormsClient.User_types
             }
             else
             {
-
+                //public TaskAddRequest(string username, string password, Task task, Tasklist tasklist)
+                client.SendRequest(new TaskAddRequest(Users.login, Users.password, new Common.Models.Task(textBox1.Text, richTextBox1.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password) { UserID = SocketClient.Id}, DataStore.Instance.AllTasklists [checkedListBox1.SelectedIndex].TaskStatuses.First()), DataStore.Instance.AllTasklists[checkedListBox1.SelectedIndex]));
             }
         }
     }

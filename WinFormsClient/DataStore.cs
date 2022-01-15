@@ -45,8 +45,8 @@ namespace WinFormsClient
 
         public event EventHandler<TasklistsChangedEventArgs> TakListsChanged;
 
-        private HashSet<Tasklist> allTasklists;
-        public HashSet<Tasklist> AllTasklists
+        private List<Tasklist> allTasklists;
+        public List<Tasklist> AllTasklists
         {
             get
             {
@@ -56,7 +56,7 @@ namespace WinFormsClient
             set
             {
                 allTasklists = value;
-                if (TicketsChanged is not null)
+                if (TakListsChanged is not null)
                 {
                     TakListsChanged(this, new(allTasklists));
                 }
