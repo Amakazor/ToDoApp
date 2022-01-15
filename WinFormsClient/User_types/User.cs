@@ -631,5 +631,10 @@ namespace WinFormsClient.User_types
         {
             Show(33);
         }
+
+        private void showTasksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

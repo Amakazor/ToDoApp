@@ -97,7 +97,6 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.showTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,7 +104,6 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showTasksToolStripMenuItem,
             this.editTaskListToolStripMenuItem,
             this.newTaskToolStripMenuItem,
             this.editTaskToolStripMenuItem,
@@ -739,12 +737,6 @@
             this.label22.Text = "Name:";
             this.label22.Visible = false;
             // 
-            // showTasksToolStripMenuItem
-            // 
-            this.showTasksToolStripMenuItem.Name = "showTasksToolStripMenuItem";
-            this.showTasksToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.showTasksToolStripMenuItem.Text = "Show Tasks";
-            // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -886,6 +878,5 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.ToolStripMenuItem showTasksToolStripMenuItem;
     }
 }

@@ -74,5 +74,10 @@ namespace WinFormsClient.User_types
         {
             DataStore.Instance.SocketClient.SendRequest(new HelpdeskTicketUpdateRequest(DataStore.Instance.UserData.Username, DataStore.Instance.UserData.Password, new Ticket(NameBox.Text, DescBox.Text, NoteBox.Text, DataStore.Instance.UserData, (TicketStatus)Enum.Parse(typeof(TicketStatus), StatusBox.SelectedItem.ToString())) { TicketId = DataStore.Instance.AllTickets.OrderBy(t => t.TicketId).ToList()[TicketsBox.SelectedIndex].TicketId}));
         }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
