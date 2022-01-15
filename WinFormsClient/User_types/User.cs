@@ -323,7 +323,7 @@ namespace WinFormsClient.User_types
             }
             else if (checkedListBox6.SelectedIndex == -1)
             {
-                MessageBox.Show("Celect item in the status list");
+                MessageBox.Show("Select item in the status list");
             }
             else
             {
@@ -340,8 +340,15 @@ namespace WinFormsClient.User_types
 
         private void button1_Click(object sender, EventArgs e)
         {
+            try
+            {
             client.SendRequest(new TaskUpdateRequest(Users.login, Users.password, new Common.Models.Task(textBox2.Text, textBox3.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password ) { UserID = SocketClient.Id}, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].TaskStatuses.OrderBy(t => t.TaskStatusID).ToList()[checkedListBox4.SelectedIndex]) { TaskId = DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].Tasks.OrderBy(t => t.TaskId).ToList()[checkedListBox3.SelectedIndex].TaskId}, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex]));
             ResetIndices();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Not all data available");
+            }
         }
 
         private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -442,8 +449,15 @@ namespace WinFormsClient.User_types
             }
             else
             {
+                try
+                {
                 ResetIndices();
                 client.SendRequest(new TaskstatusAddRequest(Users.login, Users.password, new(textBox4.Text, ColorDialog.Color.ToArgb().ToString()), DataStore.Instance.AllTasklists.OrderBy(t => t.TaskListID).ToList()[CreateStatusTakListBox.SelectedIndex]));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Not all data available");
+                }
             }
         }
 
@@ -460,10 +474,17 @@ namespace WinFormsClient.User_types
 
         private void button5_Click(object sender, EventArgs e)
         {
+            try
+            {
             client.SendRequest(new TaskDeleteRequest(Users.login, Users.password, new Task(textBox2.Text, textBox3.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password) { UserID = SocketClient.Id }, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].TaskStatuses.OrderBy(t => t.TaskStatusID).ToList()[checkedListBox4.SelectedIndex]) { TaskId = DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].Tasks.OrderBy(t => t.TaskId).ToList()[checkedListBox3.SelectedIndex].TaskId }, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex]));
             ResetIndices();
             textBox2.Text = "";
             textBox3.Text = "";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Not all data available");
+            }
         }
 
         private void sendTicketToolStripMenuItem_Click(object sender, EventArgs e)
