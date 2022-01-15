@@ -94,7 +94,8 @@ namespace Common.Models
             if (dbUser is null)
             {
                 HashPassword();
-                UserStatus = UserStatus.INACTIVE;
+                //UserStatus = UserStatus.INACTIVE; // WOULD BE FEASIBLE IF WE WERE ACTUALLY IMPLEMENTING ADMINS
+                UserStatus = UserStatus.ACTIVE;
                 dbContext.Users.Add(this);
                 dbContext.SaveChanges();
 
