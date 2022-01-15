@@ -77,7 +77,7 @@ namespace WinFormsClient.User_types
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
