@@ -58,12 +58,11 @@ namespace ConsoleServer
                     {
                         Console.WriteLine("\nWrong port, try again.");
                         Console.WriteLine("Enter server port:");
-
                     }
 
                     server = new TcpListener(IPAddress.Loopback, port);
                     server.Start();
-
+                    Logs.LogEntry("Opened connection on IP: "+ IPAddress.Loopback.ToString() + ", port: " + port);
 
                     byte[] buffer = new byte[256];
                     string data;
@@ -75,7 +74,7 @@ namespace ConsoleServer
 
                         TcpClient client = server.AcceptTcpClient();
                         Console.WriteLine("Connected!");
-
+                        Logs.LogEntry("Connected with client. ");
 
                         BinaryReader reader = new BinaryReader(client.GetStream(), Encoding.UTF8, true);
                         data = reader.ReadString();
@@ -89,6 +88,7 @@ namespace ConsoleServer
                         writer.Write(message);
 
                         client.Close();
+                        Logs.LogEntry("Disconected. ");
                     }
                 }
                 catch (SocketException e)
