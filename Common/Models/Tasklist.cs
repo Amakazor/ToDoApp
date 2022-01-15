@@ -262,15 +262,23 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Tasks)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u).FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (task is null) return "Task doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
             if (dbTask is not null) return "Task already exists";
+            if (dbUser is null) return "User is missing";
 
-            dbContext.Tasks.Add(task);
+            task.Author = dbUser;
             dbTasklist.Tasks.Add(task);
 
             dbContext.SaveChanges();
