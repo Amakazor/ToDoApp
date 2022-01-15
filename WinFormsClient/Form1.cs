@@ -23,7 +23,8 @@ namespace WinFormsClient
         public Form1()
         {
             InitializeComponent();
-            Ip_address.Text = ip_address;  
+            Ip_address.Text = ip_address;
+            Port.Text = "22222";
         }
 
         private void Ip_address_TextChanged(object sender, EventArgs e)
@@ -44,10 +45,10 @@ namespace WinFormsClient
                         
                     }
                     SocketClient client = new (ip_address, port);
+                    DataStore.Instance.SocketClient = client;
+
                     Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
                     client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));
-                    //client.SendRequest(new UserLoginRequest(new("admin", "admin")));
-                    //MessageBox.Show("Connected");
                     break;
                 }
                 catch (Exception ex)
@@ -55,76 +56,6 @@ namespace WinFormsClient
                     MessageBox.Show(ex.Message);
                 }
             }
-            
-
-            //SocketClient client = new SocketClient(IPAddress.Parse(Ip_address), int.Parse(Port.Text));
-            /*
-            client = new TcpClient();
-            IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(Ip_address.Text), int.Parse(Port.Text));
-
-            try
-            {
-                client.Connect(IpEnd);
-
-                if (client.Connected)
-                {
-                    txtLogs.AppendText("Connected to server" + "\n");
-                    Logs.LogEntry(recieve);
-                    STW = new StreamWriter(client.GetStream());
-                    STR = new StreamReader(client.GetStream());
-                    STW.AutoFlush = true;
-                    backgroundWorker1.RunWorkerAsync();
-                    backgroundWorker2.WorkerSupportsCancellation = true;
-                    txtLogs.Text += "Client Connected\n";
-                    lblStatus.Text = "connected";
-
-                }
-                else
-                {
-                    txtLogs.Text += "Client did not connect\n";
-                }
-            }
-            catch (Exception ex)
-            {
-                lblStatus.Text = "Error";
-                txtLogs.Text += "Client could not connect\n>>>" + ex.Message.ToString() + "\n";
-            }
-            
-            try
-            {
-                TcpClient tcpclnt = new TcpClient();               
-                Logs.LogEntry($"Connecting.....{Ip_address.ToString()}: {Int32.Parse(Port.Text)}");
-                //tcpclnt.ConnectAsync(Ip_address.ToString(), Int32.Parse(Port.Text));
-                tcpclnt.Connect(Ip_address.ToString(), Int32.Parse(Port.Text));
-                while (true)
-                {
-                    Logs.LogEntry("Connected");
-                    Status_Info.Text = "Connected";
-                    MessageBox.Show("Enter the string to be transmitted : ");
-
-                    //String str = Console.ReadLine();
-                    String str = "tekst do wysłania";
-                    Stream stm = tcpclnt.GetStream();
-
-                    ASCIIEncoding asen = new ASCIIEncoding();
-                    byte[] ba = asen.GetBytes(str);
-                    MessageBox.Show("Transmitting.....");
-
-                    stm.Write(ba, 0, ba.Length);
-
-                    byte[] bb = new byte[1024];
-                    int k = stm.Read(bb, 0, 1024);
-
-                    for (int i = 0; i < k; i++)
-                        MessageBox.Show(Convert.ToString(bb[i]));
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error..... " + ex.StackTrace);
-            }*/
-
         }
 
         private void Status_Info_Click(object sender, EventArgs e)

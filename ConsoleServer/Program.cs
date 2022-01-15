@@ -103,87 +103,87 @@ namespace ConsoleServer
         private static void RequestProcessor_AdminRequestedUserDelete(object sender, AdminUserEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                string error = User.Delete(e.User, e.ModifiedUser);
+                string error = User.Delete(authenticatedUser, e.ModifiedUser);
                 if (error is not null) e.ResponseHandle = new ErrorResponse(error);
-                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_AdminRequestedUserActivate(object sender, AdminUserEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                string error = User.Activate(e.User, e.ModifiedUser);
+                string error = User.Activate(authenticatedUser, e.ModifiedUser);
                 if (error is not null) e.ResponseHandle = new ErrorResponse(error);
-                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+                else e.ResponseHandle = new UserGetAllResponse(User.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_AdminRequestedUserGet(object sender, RequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = User.IsAdminError(authenticatedUser);
                 if (error is not null) e.ResponseHandle = new ErrorResponse(error);
-                e.ResponseHandle = new UserGetAllResponse(User.GetAll(e.User));
+                e.ResponseHandle = new UserGetAllResponse(User.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_HelpdeskRequestedTicketUpdate(object sender, TicketRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                string error = Ticket.TryUpdate(e.User, e.Ticket);
+                string error = Ticket.TryUpdate(authenticatedUser, e.Ticket);
                 if (error is not null) e.ResponseHandle = new ErrorResponse(error);
-                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_HelpdeskRequestedTicketGet(object sender, RequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(e.User));
+                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_RequestedTicketAdd(object sender, TicketRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                string error = Ticket.TryAdd(e.User, e.Ticket);
+                string error = Ticket.TryAdd(authenticatedUser, e.Ticket);
                 if (error is not null) e.ResponseHandle = new ErrorResponse(error);
-                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(e.User));
+                else e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_RequestedTicketsGet(object sender, RequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
-                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(e.User));
+                e.ResponseHandle = new TicketGetAllResponse(Ticket.GetAll(authenticatedUser));
             }
         }
 
         private static void RequestProcessor_RequestedTaskstatusUpdate(object sender, TaskStatusRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryUpdateTaskstatus(authenticatedUser, e.Tasklist, e.TaskStatus);
@@ -195,7 +195,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTaskstatusDelete(object sender, TaskStatusRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryDeleteTaskstatus(authenticatedUser, e.Tasklist, e.TaskStatus);
@@ -207,7 +207,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTaskstatusAdd(object sender, TaskStatusRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryAddTaskstatus(authenticatedUser, e.Tasklist, e.TaskStatus);
@@ -219,7 +219,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTaskUpdate(object sender, TaskRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryUpdateTask(authenticatedUser, e.Tasklist, e.Task);
@@ -231,7 +231,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTaskDelete(object sender, TaskRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryRemoveTask(authenticatedUser, e.Tasklist, e.Task);
@@ -243,7 +243,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTaskAdd(object sender, TaskRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryAddTask(authenticatedUser, e.Tasklist, e.Task);
@@ -255,7 +255,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedOwnershipGive(object sender, MemberRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryChangeOwner(authenticatedUser, e.Tasklist, e.Member);
@@ -267,7 +267,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedMemberRemove(object sender, MemberRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryRemoveMember(authenticatedUser, e.Tasklist, e.Member);
@@ -279,7 +279,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedMemberAdd(object sender, MemberRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryAddMember(authenticatedUser, e.Tasklist, e.Member);
@@ -291,7 +291,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTasklistDelete(object sender, TasklistRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryDelete(authenticatedUser, e.Tasklist);
@@ -303,7 +303,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTasklistAdd(object sender, TasklistRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryAdd(authenticatedUser, e.Tasklist);
@@ -315,7 +315,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTasklistUpdate(object sender, TasklistRequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 string error = Tasklist.TryUpdate(authenticatedUser, e.Tasklist);
@@ -327,7 +327,7 @@ namespace ConsoleServer
         private static void RequestProcessor_RequestedTasklistGet(object sender, RequestEventArgs e)
         {
             User authenticatedUser = e.User.Authenticate();
-            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, e.User);
+            if (authenticatedUser is null) e.ResponseHandle = new LoginResponse(false, authenticatedUser);
             else
             {
                 e.ResponseHandle = new TasklistGetResponse(Tasklist.GetAll(authenticatedUser));

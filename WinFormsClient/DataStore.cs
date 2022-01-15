@@ -63,6 +63,9 @@ namespace WinFormsClient
             }
         }
 
+        public User UserData { get; set; }
+        public SocketClient SocketClient { get; set; }
+
         private DataStore()
         {
 

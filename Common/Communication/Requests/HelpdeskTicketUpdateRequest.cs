@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Common.Communication.Requests
 {
     [DataContract()]
-    internal class HelpdeskTicketUpdateRequest : TickedRequest
+    public class HelpdeskTicketUpdateRequest : TickedRequest
     {
         public HelpdeskTicketUpdateRequest(string username, string password, Ticket ticket) : base(username, password, ticket)
         {

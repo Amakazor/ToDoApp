@@ -60,15 +60,17 @@ namespace Common.Models
 
         public static HashSet<Ticket> GetAll(User user)
         {
-            if (user.UserType == UserType.HELPDESK)
+            using DatabaseContext dbContext = new();
+            User dbUser = (from u in dbContext.Users where u.Username == user.Username select u)
+                .FirstOrDefault();
+
+            if (dbUser.UserType == UserType.HELPDESK)
             {
-                using DatabaseContext dbContext = new();
                 return (from ti in dbContext.Tickets select ti).ToHashSet();
             }
             else
             {
-                using DatabaseContext dbContext = new();
-                return (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).ToHashSet();
+                return (from ti in dbContext.Tickets where ti.Author.UserID.Equals(dbUser.UserID) select ti).ToHashSet();
             }
         }
 
@@ -79,7 +81,7 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti)
+            Ticket dbTicket = (from ti in dbContext.Tickets where ti.TicketId == ticket.TicketId select ti)
                 .Include(t => t.Author)
                 .FirstOrDefault();
 
@@ -89,6 +91,7 @@ namespace Common.Models
             if (dbTicket is null) return "Tasklist doesn't exists";
 
             dbTicket.Status = ticket.Status;
+            dbTicket.Note = ticket.Note;
             dbTicket.LastChangedBy = dbUser;
 
             dbContext.SaveChanges();

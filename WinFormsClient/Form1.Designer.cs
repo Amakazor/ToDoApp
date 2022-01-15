@@ -78,7 +78,7 @@ namespace WinFormsClient
             this.Port.Name = "Port";
             this.Port.Size = new System.Drawing.Size(47, 23);
             this.Port.TabIndex = 4;
-            this.Port.Text = "21212";
+            this.Port.Text = "22222";
             // 
             // Form1
             // 

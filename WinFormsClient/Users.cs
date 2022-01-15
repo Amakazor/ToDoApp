@@ -14,8 +14,6 @@ namespace WinFormsClient
         public Users()
         {
             InitializeComponent();
-            //login = textBox1.Text;
-            //password = textBox2.Text;
             label2.Visible = false;
             textBox1.Visible = false;
             label3.Visible = false;
@@ -172,6 +170,8 @@ namespace WinFormsClient
             login = textBox1.Text;
             password = textBox2.Text;
 
+            DataStore.Instance.UserData = new Common.Models.User(login, password);
+
             if (textBox1.Text == "")
                 MessageBox.Show("Enter login");
             else if (textBox2.Text == "")
@@ -181,9 +181,6 @@ namespace WinFormsClient
                 SocketClient client = new(Form1.ip_address, Form1.port);
                 client.SendRequest(new UserLoginRequest(new(login, password)));
             }
-            //MessageBox.Show(Form1.ip_address + Form1.port);
-            //SocketClient client = new ();
-            //MessageBox.Show(login + password);
         }
     }
 }

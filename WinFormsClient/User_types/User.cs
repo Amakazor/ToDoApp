@@ -439,11 +439,11 @@ namespace WinFormsClient.User_types
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if ((textBox4.Text != "") && (richTextBox2.Text != ""))
+            if ((textBox5.Text != "") && (richTextBox2.Text != ""))
             {
                 try
                 {
-                    client.SendRequest(new TickedAddRequest(Users.login, Users.password, new Ticket(textBox4.Text, richTextBox2.Text, "", new Common.Models.User(Users.login, Users.password), TicketStatus.INACTIVE)));
+                    client.SendRequest(new TickedAddRequest(Users.login, Users.password, new Ticket(textBox5.Text, richTextBox2.Text, "", new Common.Models.User(Users.login, Users.password), TicketStatus.INACTIVE)));
                     MessageBox.Show("Ticket sent");
                 }
                 catch (Exception ex)
