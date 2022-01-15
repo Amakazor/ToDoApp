@@ -106,11 +106,14 @@ namespace Common.Models
 
             User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
                 .FirstOrDefault();
+            
+            User dbAuthor = (from u in dbContext.Users where u.Username == ticket.Author.Username select u)
+                .FirstOrDefault();
 
             if (dbTicket is not null) return "Ticket already exists";
-            if (dbUser is null) return "Author doesn't exist";
+            if (dbAuthor is null) return "Author doesn't exist";
 
-            ticket.Author = dbUser;
+            ticket.Author = dbAuthor;
 
             dbContext.Tickets.Add(ticket);
             dbContext.SaveChanges();
