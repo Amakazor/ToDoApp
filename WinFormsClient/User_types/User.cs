@@ -323,7 +323,7 @@ namespace WinFormsClient.User_types
             }
             else if (checkedListBox6.SelectedIndex == -1)
             {
-                MessageBox.Show("Celect item in the status list");
+                MessageBox.Show("Select item in the status list");
             }
             else
             {
