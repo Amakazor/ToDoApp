@@ -67,7 +67,8 @@ namespace WinFormsClient
         private void ResponseProcessor_RespondedError(object sender, Common.Communication.Responses.ResponseEvents.ErrorResponseEventArgs e)
         {
             //returns error to show in box
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
+            MessageBox.Show(e.Message);
         }
 
         private void ResponseProcessor_RespondedTasklistGet(object sender, Common.Communication.Responses.ResponseEvents.TasklistGetResponseEventArgs e)

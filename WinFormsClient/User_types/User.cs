@@ -39,6 +39,12 @@ namespace WinFormsClient.User_types
             checkedListBox4.Visible = false;
             button1.Visible = false;
             button2.Visible = false;
+            button3.Visible = false;
+            label9.Visible = false;
+            textBox4.Visible = false;
+            label8.Visible = false;
+            richTextBox2.Visible = false;
+            button4.Visible = false;
             client.SendRequest(new TasklistGetRequest(Users.login,Users.password));
 
 
@@ -99,6 +105,13 @@ namespace WinFormsClient.User_types
                     checkedListBox4.Visible = false;
                     button1.Visible = false;
                     button2.Visible = false;
+                    button3.Visible = false;
+
+                    label9.Visible = false;
+                    textBox4.Visible = false;
+                    label8.Visible = false;
+                    richTextBox2.Visible = false;
+                    button4.Visible = false;
                     break;
                 case 1:
                     label1.Visible = false;
@@ -125,6 +138,13 @@ namespace WinFormsClient.User_types
                     checkedListBox4.Visible = false;
                     button1.Visible = false;
                     button2.Visible = false;
+                    button3.Visible = false;
+
+                    label9.Visible = false;
+                    textBox4.Visible = false;
+                    label8.Visible = false;
+                    richTextBox2.Visible = false;
+                    button4.Visible = false;
                     break;
                 case 2:
                     label1.Visible = false;
@@ -151,6 +171,13 @@ namespace WinFormsClient.User_types
                     checkedListBox4.Visible = false;
                     button1.Visible = false;
                     button2.Visible = false;
+                    button3.Visible = false;
+
+                    label9.Visible = false;
+                    textBox4.Visible = false;
+                    label8.Visible = false;
+                    richTextBox2.Visible = false;
+                    button4.Visible = false;
                     break;
                 case 3:
                     label1.Visible = false;
@@ -177,6 +204,46 @@ namespace WinFormsClient.User_types
                     checkedListBox4.Visible = true;
                     button1.Visible = true;
                     button2.Visible = true;
+                    button3.Visible = true;
+
+                    label9.Visible = false;
+                    textBox4.Visible = false;
+                    label8.Visible = false;
+                    richTextBox2.Visible = false;
+                    button4.Visible = false;
+                    break;
+                    case 4:
+                    label1.Visible = false;
+                    textBox1.Visible = false;
+                    label2.Visible = false;
+                    richTextBox1.Visible = false;
+                    Createtask.Visible = false;
+                    checkedListBox1.Visible = false;
+                    label7.Visible = false;
+
+                    label3.Visible = false;
+                    Fname.Visible = false;
+                    label4.Visible = false;
+                    Lname.Visible = false;
+                    label5.Visible = false;
+                    Uname.Visible = false;
+                    label6.Visible = false;
+                    Pass.Visible = false;
+
+                    checkedListBox2.Visible = false;
+                    checkedListBox3.Visible = false;
+                    textBox2.Visible = false;
+                    textBox3.Visible = false;
+                    checkedListBox4.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
+                    button3.Visible = false;
+
+                    label9.Visible = true;
+                    textBox4.Visible = true;
+                    label8.Visible = true;
+                    richTextBox2.Visible = true;
+                    button4.Visible = true;
                     break;
                 default:
                     break;
@@ -342,6 +409,24 @@ namespace WinFormsClient.User_types
             for (int iIndex = 0; iIndex < checkedListBox4.Items.Count; iIndex++)
                 checkedListBox4.SetItemCheckState(iIndex, CheckState.Unchecked);
             checkedListBox4.SetItemCheckState(iSelectedIndex, CheckState.Checked);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            client.SendRequest(new TaskDeleteRequest(Users.login, Users.password, new Common.Models.Task(textBox2.Text, textBox3.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password) { UserID = SocketClient.Id }, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].TaskStatuses.OrderBy(t => t.TaskStatusID).ToList()[checkedListBox4.SelectedIndex]) { TaskId = DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].Tasks.OrderBy(t => t.TaskId).ToList()[checkedListBox3.SelectedIndex].TaskId }, DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex]));           
+            index = -1;
+            textBox2.Text = "";
+            textBox3.Text = "";
+        }
+
+        private void sendTicketToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show(4);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            client.SendRequest(new TickedAddRequest(Users.login, Users.password, new Common.Models.Ticket(textBox4.Text, richTextBox2.Text, new Common.Models.User(Users.login, Users.password), Common.Models.Enums.TicketStatus.INACTIVE)));
         }
     }
 }

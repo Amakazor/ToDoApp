@@ -17,7 +17,7 @@ namespace Common.Communication.Responses
         public string Message { get; private set; }
 
         [DataMember(IsRequired = true)]
-        public override ResponseType Type => ResponseType.PING;
+        public override ResponseType Type => ResponseType.ERROR;
 
         protected new ErrorResponseEventArgs eventArgs;
 

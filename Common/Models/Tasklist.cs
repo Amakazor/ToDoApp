@@ -353,9 +353,9 @@ namespace Common.Models
             if (dbUser is null) return "User is missing";
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (task is null) return "Task doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
             if (dbTask is null) return "Task doesn't exists";
-            if (!dbTasklist.Tasks.Contains(task)) return "Tasklist doesn't contain the task";
+            if (!dbTasklist.Tasks.Select(t => t.TaskId).Contains(dbTask.TaskId)) return "Tasklist doesn't contain the task";
 
             dbTasklist.Tasks.Remove(dbTask);
             dbContext.Tasks.Remove(dbTask);
