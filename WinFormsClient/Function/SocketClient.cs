@@ -9,6 +9,7 @@ using Common.Models.Enums;
 using System.Collections.Generic;
 using System.IO;
 using WinFormsClient.User_types;
+using System.Linq;
 
 namespace WinFormsClient
 {
@@ -21,6 +22,7 @@ namespace WinFormsClient
         private ResponseProcessor responseProcessor { get; }
 
         public static string User_name, User_password, First_name, Last_name;
+        public static int ? Id;
 
         //public static string[,] tab = new string[10,10];
 
@@ -72,11 +74,11 @@ namespace WinFormsClient
         {
             //returns all tasklist for the user, only for testing
             //throw new NotImplementedException();
-            MessageBox.Show(e.Tasklists.ToString());
-            MessageBox.Show(e.Tasklists.Comparer.ToString());
+           // MessageBox.Show(e.Tasklists.ToString());
+          //  MessageBox.Show(e.Tasklists.Comparer.ToString());
             //e.Tasklists.             
             //DisplaySet(e.Tasklists);
-            
+            /*
             void DisplaySet(HashSet<Common.Models.Tasklist> collection)
             {
                 int j = 0;
@@ -84,17 +86,18 @@ namespace WinFormsClient
                 {
                     if (i.Name != null)
                     {
-                        SocketClient.tab[j, 0] = i.Name;
-                        MessageBox.Show(tab[j, 0]);
-                        j++;
+                        //SocketClient.tab[j, 0] = i.Name;
+                        //MessageBox.Show(tab[j, 0]);
+                       // j++;
                     }
                     //MessageBox.Show(i.Name);   
                                            
                 }
 
             }
+            */
 
-            DataStore.Instance.AllTasklists = e.Tasklists;
+            DataStore.Instance.AllTasklists = e.Tasklists.ToList();
         }
 
         private void ResponseProcessor_RespondedLogin(object sender, Common.Communication.Responses.ResponseEvents.LoginResponseEventArgs e)
@@ -105,6 +108,7 @@ namespace WinFormsClient
                 Last_name = e.User.LastName;
                 User_name = e.User.Username;
                 User_password = e.User.Password;
+                Id = e.User.UserID;
 
                 //Login successfull
                 switch (e.User.UserType)
@@ -127,7 +131,7 @@ namespace WinFormsClient
             else
             {
                 //Login not successfull or logged-out
-                MessageBox.Show("Correct your login or password and try again");
+                MessageBox.Show("Correct your login or password");
             }
         }
 
