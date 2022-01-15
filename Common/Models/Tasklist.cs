@@ -56,8 +56,8 @@ namespace Common.Models
                 User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us).FirstOrDefault();
                 User dbAdmin = (from us in dbContext.Users where us.UserID == admin.UserID select us).FirstOrDefault();
 
-                TaskStatus taskStatus1 = new("TaskStatus1", "ff0000");
-                TaskStatus taskStatus2 = new("TaskStatus2", "0000ff");
+                TaskStatus taskStatus1 = new("TaskStatus1", "-65536");
+                TaskStatus taskStatus2 = new("TaskStatus2", "-65536");
 
                 Task task1 = new("Task1", "Task1Desc", dbUser, taskStatus1);
                 Task task2 = new("Task2", "Task2Desc", dbAdmin, taskStatus2);
@@ -263,9 +263,13 @@ namespace Common.Models
             if (!dbTasklist.Members.Select(m => m.UserID).Contains(dbMember.UserID)) return "Tasklist doesn't have this member";
             if (dbTasklist.Owner.UserID.Equals(dbMember.UserID)) return "You can't remove the owner";
 
-            foreach(Task dbTask in dbTasklist.Tasks.Where(dbTask => dbTask.Author.UserID.Equals(dbMember.UserID)))
+
+            if (dbTasklist.Tasks != null && dbTasklist.Tasks.Count > 0)
             {
-                dbTask.Author = dbTasklist.Owner;
+                foreach (Task dbTask in dbTasklist.Tasks.Where(dbTask => dbTask.Author.UserID.Equals(dbMember.UserID)))
+                {
+                    dbTask.Author = dbTasklist.Owner;
+                }
             }
 
             dbTasklist.Members.Remove(dbMember);
@@ -464,9 +468,12 @@ namespace Common.Models
             if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the Task Status";
             if (dbTasklist.TaskStatuses.Count < 2) return "Can't remove the last Task Status";
 
-            foreach (Task dbTask in dbTasklist.Tasks.Where(task => task.Status.Equals(dbTaskstatus)))
+            if (dbTasklist.Tasks != null && dbTasklist.Tasks.Count > 0)
             {
-                dbTask.Status = dbTasklist.TaskStatuses.Where(status => !status.Equals(dbTaskstatus)).First();
+                foreach (Task dbTask in dbTasklist.Tasks.Where(task => task.Status.Equals(dbTaskstatus)))
+                {
+                    dbTask.Status = dbTasklist.TaskStatuses.Where(status => !status.Equals(dbTaskstatus)).First();
+                }
             }
 
             dbContext.TaskStatus.Remove(dbTaskstatus);

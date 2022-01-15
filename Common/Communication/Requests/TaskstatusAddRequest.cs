@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Common.Communication.Requests
 {
     [DataContract()]
-    internal class TaskstatusAddRequest : TaskStastusRequest
+    public class TaskstatusAddRequest : TaskStastusRequest
     {
         public TaskstatusAddRequest(string username, string password, TaskStatus taskStatus, Tasklist tasklist) : base(username, password, taskStatus, tasklist)
         {

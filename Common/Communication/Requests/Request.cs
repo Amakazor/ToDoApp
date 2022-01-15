@@ -19,6 +19,7 @@ namespace Common.Communication.Requests
     [KnownType(typeof(TaskDeleteRequest))]
     [KnownType(typeof(TaskUpdateRequest))]
     [KnownType(typeof(TaskstatusAddRequest))]
+    [KnownType(typeof(TaskstatusUpdateRequest))]
     [KnownType(typeof(TaskstatusDeleteRequest))]
     [KnownType(typeof(TickedAddRequest))]
     [KnownType(typeof(UserTicketGetAllRequest))]
