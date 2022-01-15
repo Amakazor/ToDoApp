@@ -24,6 +24,7 @@ namespace WinFormsClient.User_types
             InitializeComponent();
             DataStore.Instance.TakListsChanged += Instance_TakListsChanged;
             HideAll();
+
             client.SendRequest(new TasklistGetRequest(Users.login, Users.password));
         }
 

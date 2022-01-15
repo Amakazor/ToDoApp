@@ -14,11 +14,11 @@ namespace WinFormsClient
         public Users()
         {
             InitializeComponent();
-            label2.Visible = false;
-            textBox1.Visible = false;
-            label3.Visible = false;
-            textBox2.Visible = false;
-            button1.Visible = false;
+            label2.Visible = true;
+            textBox1.Visible = true;
+            label3.Visible = true;
+            textBox2.Visible = true;
+            button1.Visible = true;
 
             label7.Visible = false;
             textBox6.Visible = false;
@@ -166,6 +166,11 @@ namespace WinFormsClient
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
