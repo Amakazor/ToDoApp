@@ -122,11 +122,17 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(tl => tl.Members)
+                .Include(tl => tl.Owner)
+                .Include(tl => tl.TaskStatuses)
+                .FirstOrDefault();
 
-            User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us).FirstOrDefault();
+            User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us)
+                .FirstOrDefault();
+
             if (dbTasklist is not null) return "Tasklist already exists";
-            if (!tasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
 
             tasklist.Owner = dbUser;
 
@@ -142,10 +148,17 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(tl => tl.Members)
+                .Include(tl => tl.Owner)
+                .Include(tl => tl.TaskStatuses)
+                .FirstOrDefault();
+
+            User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us)
+               .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
 
             dbTasklist.Name = tasklist.Name;
 
@@ -160,19 +173,27 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(tl => tl.Members)
+                .Include(tl => tl.Owner)
+                .Include(tl => tl.Tasks)
+                .Include(tl => tl.TaskStatuses)
+                .FirstOrDefault();
+
+            User dbUser = (from us in dbContext.Users where us.UserID == user.UserID select us)
+               .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
 
-            foreach (Task task in dbTasklist.Tasks)
+            foreach (Task dbTask in dbTasklist.Tasks)
             {
-                dbContext.Remove(task);
+                dbContext.Remove(dbTask);
             }
 
-            foreach (TaskStatus taskStatus in dbTasklist.TaskStatuses)
+            foreach (TaskStatus dbTaskStatus in dbTasklist.TaskStatuses)
             {
-                dbContext.Remove(taskStatus);
+                dbContext.Remove(dbTaskStatus);
             }
 
             dbContext.Remove(dbTasklist);
@@ -189,15 +210,23 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Members)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if(dbMember is null) return "Member user  doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
-            if (dbTasklist.Members.Contains(member)) return "Tasklist already has this member";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
+            if (dbTasklist.Members.Contains(dbMember)) return "Tasklist already has this member";
 
-            dbTasklist.Members.Add(member);
+            dbTasklist.Members.Add(dbMember);
 
             dbContext.SaveChanges();
 
@@ -211,21 +240,29 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Members)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (dbMember is null) return "Member user  doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
-            if (!dbTasklist.Members.Contains(member)) return "Tasklist doesn't have this member";
-            if (dbTasklist.Owner.Equals(member)) return "You can't remove the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
+            if (!dbTasklist.Members.Select(m => m.UserID).Contains(dbMember.UserID)) return "Tasklist doesn't have this member";
+            if (dbTasklist.Owner.UserID.Equals(dbMember.UserID)) return "You can't remove the owner";
 
-            foreach(Task task in dbTasklist.Tasks.Where(task => task.Author.Equals(member)))
+            foreach(Task dbTask in dbTasklist.Tasks.Where(dbTask => dbTask.Author.UserID.Equals(dbMember.UserID)))
             {
-                task.Author = dbTasklist.Owner;
+                dbTask.Author = dbTasklist.Owner;
             }
 
-            dbTasklist.Members.Remove(member);
+            dbTasklist.Members.Remove(dbMember);
 
             dbContext.SaveChanges();
 
@@ -239,16 +276,24 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Members)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            User dbMember = (from mb in dbContext.Users where mb.Username == member.Username select mb)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (dbMember is null) return "Member user  doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
-            if (!dbTasklist.Members.Contains(member)) return "Tasklist doesn't have this member";
-            if (dbTasklist.Owner.Equals(member)) return "User is already the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
+            if (!dbTasklist.Members.Select(m => m.UserID).Contains(dbMember.UserID)) return "Tasklist doesn't have this member";
+            if (dbTasklist.Owner.UserID.Equals(dbMember.UserID)) return "User is already the owner";
 
-            dbTasklist.Owner = member;
+            dbTasklist.Owner = dbMember;
 
             dbContext.SaveChanges();
 
@@ -270,13 +315,14 @@ namespace Common.Models
             Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts)
                 .FirstOrDefault();
 
-            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u).FirstOrDefault();
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
+            if (dbUser is null) return "User is missing";
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (task is null) return "Task doesn't exists";
             if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
             if (dbTask is not null) return "Task already exists";
-            if (dbUser is null) return "User is missing";
 
             task.Author = dbUser;
             dbTasklist.Tasks.Add(task);
@@ -293,17 +339,26 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Tasks)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
 
+            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
+
+            if (dbUser is null) return "User is missing";
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (task is null) return "Task doesn't exists";
             if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
             if (dbTask is null) return "Task doesn't exists";
             if (!dbTasklist.Tasks.Contains(task)) return "Tasklist doesn't contain the task";
 
-            dbContext.Tasks.Remove(task);
-            dbTasklist.Tasks.Remove(task);
+            dbTasklist.Tasks.Remove(dbTask);
+            dbContext.Tasks.Remove(dbTask);
 
             dbContext.SaveChanges();
 
@@ -317,18 +372,28 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.Tasks)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            Task dbTask = (from ts in dbContext.Tasks where ts.TaskId == task.TaskId select ts).Include(t => t.Author)
+                .Include(t => t.Status)
+                .FirstOrDefault();
+
+            TaskStatus dbStastus = (from ts in dbContext.TaskStatus where ts.TaskStatusID == task.Status.TaskStatusID select ts)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (task is null) return "Task doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (dbStastus is null) return "Taskstatus doesn't exists";
+            if (!dbTasklist.Owner.UserID.Equals(user.UserID) && !dbTask.Author.UserID.Equals(user.UserID)) return "User is not the owner or author";
             if (dbTask is null) return "Task doesn't exists";
-            if (!dbTasklist.Tasks.Contains(task)) return "Tasklist doesn't contain the task";
+            if (!dbTasklist.Tasks.Contains(dbTask)) return "Tasklist doesn't contain the task";
 
             dbTask.Name = task.Name;
             dbTask.Description = task.Description;
-            dbTask.Status = task.Status;
+            dbTask.Status = dbStastus;
 
             dbContext.SaveChanges();
 
@@ -342,13 +407,20 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.TaskStatuses)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
             if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
             if (dbTaskstatus is not null) return "TaskStatus already exists";
+
+            taskStatus.Tasklist = dbTasklist;
 
             dbContext.TaskStatus.Add(taskStatus);
             dbTasklist.TaskStatuses.Add(taskStatus);
@@ -365,19 +437,24 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.TaskStatuses)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+
+            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
             if (dbTaskstatus is  null) return "TaskStatus doesn't exists";
-            if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the TaskStatus";
-            if (dbTasklist.TaskStatuses.Count < 2) return "Can't remove the last TaskStatus";
+            if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the Task Status";
+            if (dbTasklist.TaskStatuses.Count < 2) return "Can't remove the last Task Status";
 
-            foreach (Task task in dbTasklist.Tasks.Where(task => task.Status.Equals(dbTaskstatus)))
+            foreach (Task dbTask in dbTasklist.Tasks.Where(task => task.Status.Equals(dbTaskstatus)))
             {
-                task.Status = dbTasklist.TaskStatuses.Where(status => !status.Equals(dbTaskstatus)).First();
+                dbTask.Status = dbTasklist.TaskStatuses.Where(status => !status.Equals(dbTaskstatus)).First();
             }
 
             dbContext.TaskStatus.Remove(dbTaskstatus);
@@ -395,14 +472,18 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl).FirstOrDefault();
-            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss).FirstOrDefault();
+            Tasklist dbTasklist = (from tl in dbContext.Tasklists where tl.TaskListID == tasklist.TaskListID select tl)
+                .Include(t => t.TaskStatuses)
+                .Include(t => t.Owner)
+                .FirstOrDefault();
+            TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
+                .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
             if (dbTaskstatus is null) return "TaskStatus doesn't exists";
-            if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the TaskStatus";
+            if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the Task Status";
 
             dbTaskstatus.Color = taskStatus.Color;
             dbTaskstatus.Name = taskStatus.Name;
