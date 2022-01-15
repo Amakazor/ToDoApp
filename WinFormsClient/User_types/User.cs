@@ -10,6 +10,8 @@ namespace WinFormsClient.User_types
     public partial class User : Form
     {
             SocketClient client = new(Form1.ip_address, Form1.port);
+
+        private int index = -1;
         public User()
         {
             InitializeComponent();
@@ -30,6 +32,13 @@ namespace WinFormsClient.User_types
             Pass.Visible = false;
             checkedListBox1.Visible = false;
             label7.Visible = false;
+            checkedListBox2.Visible = false;
+            checkedListBox3.Visible = false;
+            textBox2.Visible = false;
+            textBox3.Visible = false;
+            checkedListBox4.Visible = false;
+            button1.Visible = false;
+            button2.Visible = false;
             client.SendRequest(new TasklistGetRequest(Users.login,Users.password));
 
 
@@ -47,12 +56,15 @@ namespace WinFormsClient.User_types
         private void Instance_TakListsChanged(object sender, TasklistsChangedEventArgs e)
         {
             checkedListBox1.Items.Clear();
-            //throw new NotImplementedException();
-            foreach (Common.Models.Tasklist i in e.Tasklists)
+            checkedListBox2.Items.Clear();
+            checkedListBox3.Items.Clear();
+            checkedListBox4.Items.Clear();
+            //throw new NotImplementedException();OrderByDescending(t => t.TaskId).ToList()
+            foreach (Common.Models.Tasklist i in e.Tasklists.OrderByDescending(t => t.TaskListID).ToList())
             {
                 //i.Name
                 checkedListBox1.Items.Insert(0, i.Name);
-               
+                checkedListBox2.Items.Insert(0, i.Name);               
             }
             
         }
@@ -79,6 +91,14 @@ namespace WinFormsClient.User_types
                     Uname.Visible = false;
                     label6.Visible = false;
                     Pass.Visible = false;
+
+                    checkedListBox2.Visible = false;
+                    checkedListBox3.Visible = false;
+                    textBox2.Visible = false;
+                    textBox3.Visible = false;
+                    checkedListBox4.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
                     break;
                 case 1:
                     label1.Visible = false;
@@ -97,6 +117,14 @@ namespace WinFormsClient.User_types
                     Uname.Visible = true;
                     label6.Visible = true;
                     Pass.Visible = true;
+
+                    checkedListBox2.Visible = false;
+                    checkedListBox3.Visible = false;
+                    textBox2.Visible = false;
+                    textBox3.Visible = false;
+                    checkedListBox4.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
                     break;
                 case 2:
                     label1.Visible = false;
@@ -115,6 +143,40 @@ namespace WinFormsClient.User_types
                     Uname.Visible = false;
                     label6.Visible = false;
                     Pass.Visible = false;
+
+                    checkedListBox2.Visible = false;
+                    checkedListBox3.Visible = false;
+                    textBox2.Visible = false;
+                    textBox3.Visible = false;
+                    checkedListBox4.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
+                    break;
+                case 3:
+                    label1.Visible = false;
+                    textBox1.Visible = false;
+                    label2.Visible = false;
+                    richTextBox1.Visible = false;
+                    Createtask.Visible = false;
+                    checkedListBox1.Visible = false;
+                    label7.Visible = false;
+
+                    label3.Visible = false;
+                    Fname.Visible = false;
+                    label4.Visible = false;
+                    Lname.Visible = false;
+                    label5.Visible = false;
+                    Uname.Visible = false;
+                    label6.Visible = false;
+                    Pass.Visible = false;
+
+                    checkedListBox2.Visible = true;
+                    checkedListBox3.Visible = true;
+                    textBox2.Visible = true;
+                    textBox3.Visible = true;
+                    checkedListBox4.Visible = true;
+                    button1.Visible = true;
+                    button2.Visible = true;
                     break;
                 default:
                     break;
@@ -194,6 +256,91 @@ namespace WinFormsClient.User_types
                 //public TaskAddRequest(string username, string password, Task task, Tasklist tasklist)
                 client.SendRequest(new TaskAddRequest(Users.login, Users.password, new Common.Models.Task(textBox1.Text, richTextBox1.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password) { UserID = SocketClient.Id}, DataStore.Instance.AllTasklists [checkedListBox1.SelectedIndex].TaskStatuses.First()), DataStore.Instance.AllTasklists[checkedListBox1.SelectedIndex]));
             }
+        }
+
+        private void editTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show(3);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //client.SendRequest(new TaskAddRequest(Users.login, Users.password, new Common.Models.Task(textBox1.Text, richTextBox1.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password) { UserID = SocketClient.Id }, DataStore.Instance.AllTasklists[checkedListBox1.SelectedIndex].TaskStatuses.First()), DataStore.Instance.AllTasklists[checkedListBox1.SelectedIndex]));
+            client.SendRequest(new TaskUpdateRequest(Users.login, Users.password, new Common.Models.Task(textBox2.Text, textBox3.Text, new Common.Models.User(SocketClient.User_name, SocketClient.User_password), DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].TaskStatuses.OrderBy(t => t.TaskStatusID).ToList()[checkedListBox3.SelectedIndex]), DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex]));
+        }
+
+        private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int iSelectedIndex = checkedListBox2.SelectedIndex;
+            if (iSelectedIndex == -1)
+                return;
+            for (int iIndex = 0; iIndex < checkedListBox2.Items.Count; iIndex++)
+                checkedListBox2.SetItemCheckState(iIndex, CheckState.Unchecked);
+            checkedListBox2.SetItemCheckState(iSelectedIndex, CheckState.Checked);
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (checkedListBox2.SelectedIndex != -1)
+            {
+                if (index != checkedListBox2.SelectedIndex)
+                {
+                    index = checkedListBox2.SelectedIndex;
+                    checkedListBox4.Items.Clear();
+                    checkedListBox3.Items.Clear();
+
+                    foreach (Common.Models.Task i in DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].Tasks.OrderByDescending(t => t.TaskId).ToList())
+                    {
+                        checkedListBox3.Items.Insert(0, i.Name);
+                    }
+                    foreach (Common.Models.TaskStatus i in DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].TaskStatuses.OrderByDescending(t => t.TaskStatusID).ToList())
+                    {
+                        checkedListBox4.Items.Insert(0, i.Name);
+
+                    }
+                }
+                    if ((checkedListBox3.SelectedIndex != -1) && (checkedListBox4.SelectedIndex != -1))
+                    {
+                        Common.Models.Task I = DataStore.Instance.AllTasklists[checkedListBox2.SelectedIndex].Tasks.OrderBy(t => t.TaskId).ToList()[checkedListBox3.SelectedIndex];
+                        textBox2.Text = I.Name;
+                        textBox3.Text = I.Description;
+                        //I.Name = textBox2.Text;
+                        //I.Description = textBox3.Text;
+                    }
+                /*
+                    foreach (Common.Models.Task i in DataStore.Instance.AllTasklists[checkedListBox3.SelectedIndex].Tasks)
+                
+                    textBox2.Text = i.Name;
+                    textBox3.Text = i.Description;*/
+                
+            }
+            else
+            {
+                MessageBox.Show("Select Task list");
+            }
+        }
+
+        private void checkedListBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            int iSelectedIndex = checkedListBox3.SelectedIndex;
+            if (iSelectedIndex == -1)
+                return;
+            for (int iIndex = 0; iIndex < checkedListBox3.Items.Count; iIndex++)
+                checkedListBox3.SetItemCheckState(iIndex, CheckState.Unchecked);
+            checkedListBox3.SetItemCheckState(iSelectedIndex, CheckState.Checked);
+        }
+
+        private void checkedListBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int iSelectedIndex = checkedListBox4.SelectedIndex;
+            if (iSelectedIndex == -1)
+                return;
+            for (int iIndex = 0; iIndex < checkedListBox4.Items.Count; iIndex++)
+                checkedListBox4.SetItemCheckState(iIndex, CheckState.Unchecked);
+            checkedListBox4.SetItemCheckState(iSelectedIndex, CheckState.Checked);
         }
     }
 }
