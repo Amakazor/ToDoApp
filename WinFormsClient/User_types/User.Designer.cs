@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.newTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editTaskListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +63,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.checkedListBox5 = new System.Windows.Forms.CheckedListBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +78,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newTaskToolStripMenuItem,
             this.editTaskToolStripMenuItem,
+            this.editTaskListToolStripMenuItem,
             this.sendTicketToolStripMenuItem,
             this.aboutToolStripMenuItem,
             this.logOutToolStripMenuItem});
@@ -95,6 +103,13 @@
             this.editTaskToolStripMenuItem.Text = "Edit Task";
             this.editTaskToolStripMenuItem.Click += new System.EventHandler(this.editTaskToolStripMenuItem_Click);
             // 
+            // editTaskListToolStripMenuItem
+            // 
+            this.editTaskListToolStripMenuItem.Name = "editTaskListToolStripMenuItem";
+            this.editTaskListToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.editTaskListToolStripMenuItem.Text = "Edit Task List";
+            this.editTaskListToolStripMenuItem.Click += new System.EventHandler(this.editTaskListToolStripMenuItem_Click);
+            // 
             // sendTicketToolStripMenuItem
             // 
             this.sendTicketToolStripMenuItem.Name = "sendTicketToolStripMenuItem";
@@ -105,8 +120,8 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.aboutToolStripMenuItem.Text = "About me";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // logOutToolStripMenuItem
@@ -321,7 +336,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(431, 497);
+            this.button3.Location = new System.Drawing.Point(428, 497);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(163, 22);
@@ -332,7 +347,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(711, 426);
+            this.button4.Location = new System.Drawing.Point(743, 254);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(250, 22);
@@ -344,7 +359,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(711, 246);
+            this.label8.Location = new System.Drawing.Point(743, 74);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 15);
             this.label8.TabIndex = 27;
@@ -353,7 +368,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(711, 206);
+            this.label9.Location = new System.Drawing.Point(743, 34);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(32, 15);
             this.label9.TabIndex = 26;
@@ -362,7 +377,7 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(711, 263);
+            this.richTextBox2.Location = new System.Drawing.Point(743, 91);
             this.richTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(251, 155);
@@ -371,17 +386,84 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(711, 223);
+            this.textBox4.Location = new System.Drawing.Point(743, 51);
             this.textBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(251, 23);
             this.textBox4.TabIndex = 24;
+            // 
+            // checkedListBox5
+            // 
+            this.checkedListBox5.FormattingEnabled = true;
+            this.checkedListBox5.Location = new System.Drawing.Point(703, 325);
+            this.checkedListBox5.Name = "checkedListBox5";
+            this.checkedListBox5.Size = new System.Drawing.Size(189, 112);
+            this.checkedListBox5.TabIndex = 29;
+            this.checkedListBox5.SelectedIndexChanged += new System.EventHandler(this.checkedListBox5_SelectedIndexChanged);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(912, 408);
+            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(162, 22);
+            this.button5.TabIndex = 31;
+            this.button5.Text = "Delete task list name";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(912, 327);
+            this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(162, 22);
+            this.button6.TabIndex = 30;
+            this.button6.Text = "Create new task list name";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(912, 353);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(162, 23);
+            this.textBox5.TabIndex = 32;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(912, 381);
+            this.button7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(162, 22);
+            this.button7.TabIndex = 33;
+            this.button7.Text = "Update task list name";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(703, 442);
+            this.button8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(371, 22);
+            this.button8.TabIndex = 34;
+            this.button8.Text = "Refresh";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1144, 675);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.checkedListBox5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
@@ -458,5 +540,12 @@
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.ToolStripMenuItem sendTicketToolStripMenuItem;
+        private System.Windows.Forms.CheckedListBox checkedListBox5;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.ToolStripMenuItem editTaskListToolStripMenuItem;
     }
 }

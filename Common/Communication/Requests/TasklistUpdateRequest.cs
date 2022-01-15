@@ -12,6 +12,6 @@ namespace Common.Communication.Requests
         }
 
         [DataMember(IsRequired = true)]
-        public override RequestType Type => RequestType.TASKLIST_DELETE;
+        public override RequestType Type => RequestType.TASKLIST_UPDATE;
     }
 }

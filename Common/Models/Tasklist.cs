@@ -25,6 +25,12 @@ namespace Common.Models
             TaskStatuses = taskStatuses;
         }
 
+        public Tasklist(string name, User owner)
+        {
+            Name = name;
+            Owner = owner;
+        }
+
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -132,7 +138,7 @@ namespace Common.Models
                 .FirstOrDefault();
 
             if (dbTasklist is not null) return "Tasklist already exists";
-            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
+            if (!tasklist.Owner.Username.Equals(dbUser.Username)) return "User is not the owner";
 
             tasklist.Owner = dbUser;
 

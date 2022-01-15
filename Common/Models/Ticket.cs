@@ -13,15 +13,17 @@ namespace Common.Models
 {
     public class Ticket
     {
-        public Ticket(string name, string description, User author, TicketStatus status)
+        public Ticket()
+        { 
+        }
+
+        public Ticket(string name, string description, string note, User author, TicketStatus status)
         {
             Name = name;
             Description = description;
+            Note = note;
             Author = author;
             Status = status;
-        }
-        public Ticket()
-        { 
         }
 
         [Key]
