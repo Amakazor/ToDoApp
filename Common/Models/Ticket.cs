@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Common.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Common.Models
 {
@@ -65,12 +66,17 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).FirstOrDefault();
+            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti)
+                .Include(t => t.Author)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
             if (dbTicket is null) return "Tasklist doesn't exists";
 
             dbTicket.Status = ticket.Status;
-            dbTicket.LastChangedBy = user;
+            dbTicket.LastChangedBy = dbUser;
 
             dbContext.SaveChanges();
 
@@ -83,9 +89,17 @@ namespace Common.Models
 
             using DatabaseContext dbContext = new();
 
-            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti).FirstOrDefault();
+            Ticket dbTicket = (from ti in dbContext.Tickets where ti.Author.UserID.Equals(user.UserID) select ti)
+                .Include(t => t.Author)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
 
             if (dbTicket is not null) return "Ticket already exists";
+            if (dbUser is null) return "Author doesn't exist";
+
+            ticket.Author = dbUser;
 
             dbContext.Tickets.Add(ticket);
             dbContext.SaveChanges();

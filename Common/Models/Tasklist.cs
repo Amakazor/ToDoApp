@@ -415,9 +415,12 @@ namespace Common.Models
             TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
                 .FirstOrDefault();
 
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
+
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
-            if (!dbTasklist.Owner.Equals(user)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
             if (dbTaskstatus is not null) return "TaskStatus already exists";
 
             taskStatus.Tasklist = dbTasklist;
@@ -445,9 +448,12 @@ namespace Common.Models
             TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
                 .FirstOrDefault();
 
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
+                .FirstOrDefault();
+
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
-            if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
             if (dbTaskstatus is  null) return "TaskStatus doesn't exists";
             if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the Task Status";
             if (dbTasklist.TaskStatuses.Count < 2) return "Can't remove the last Task Status";
@@ -476,12 +482,16 @@ namespace Common.Models
                 .Include(t => t.TaskStatuses)
                 .Include(t => t.Owner)
                 .FirstOrDefault();
+
             TaskStatus dbTaskstatus = (from tss in dbContext.TaskStatus where tss.TaskStatusID == taskStatus.TaskStatusID select tss)
+                .FirstOrDefault();
+
+            User dbUser = (from u in dbContext.Users where u.UserID == user.UserID select u)
                 .FirstOrDefault();
 
             if (dbTasklist is null) return "Tasklist doesn't exists";
             if (taskStatus is null) return "Task Status doesn't exists";
-            if (!dbTasklist.Owner.UserID.Equals(user.UserID)) return "User is not the owner";
+            if (!dbTasklist.Owner.UserID.Equals(dbUser.UserID)) return "User is not the owner";
             if (dbTaskstatus is null) return "TaskStatus doesn't exists";
             if (!dbTasklist.TaskStatuses.Contains(dbTaskstatus)) return "Tasklist doesn't contain the Task Status";
 
