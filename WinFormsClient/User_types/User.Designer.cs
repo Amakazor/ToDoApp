@@ -330,7 +330,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(583, 22);
             this.button2.TabIndex = 22;
-            this.button2.Text = "Refresh";
+            this.button2.Text = "Enter";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -449,7 +449,7 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(371, 22);
             this.button8.TabIndex = 34;
-            this.button8.Text = "Refresh";
+            this.button8.Text = "Enter";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 

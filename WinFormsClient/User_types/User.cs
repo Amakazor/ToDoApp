@@ -536,6 +536,7 @@ namespace WinFormsClient.User_types
             if (textBox5.Text != "")
             {
             client.SendRequest(new TasklistAddRequest(Users.login, Users.password, new Common.Models.Tasklist(textBox5.Text, new Common.Models.User(Users.login, Users.password))));
+                textBox5.Text = "";
             }
             else
             {
