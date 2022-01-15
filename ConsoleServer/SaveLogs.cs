@@ -14,21 +14,15 @@ namespace ConsoleServer
 {
     public partial class Logs
     {
-        private static bool firstLog = false;
         public static void LogEntry(string message)
         {
-            StreamWriter logFile;
-            if (firstLog)
-            {
-                logFile = File.AppendText("logs.txt");
-            }
-            else
-            {
-                logFile = File.CreateText("logs.txt");
-                firstLog = true;
-            }
+            string timestamp = "[" + DateTime.Now.ToString("u") + "]";
 
-            logFile.WriteLine(message);
+            StreamWriter logFile;
+
+            logFile = File.AppendText("logs.txt");
+
+            logFile.WriteLine(timestamp + message + '\n');
             logFile.Close();
         }
     }
