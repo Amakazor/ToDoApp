@@ -23,6 +23,14 @@ namespace WinFormsClient.User_types
             InitializeComponent();
             DataStore.Instance.TakListsChanged += Instance_TakListsChanged;
             HideAll();
+            label3.Visible = true;
+            Fname.Visible = true;
+            label4.Visible = true;
+            Lname.Visible = true;
+            label5.Visible = true;
+            Uname.Visible = true;
+            label6.Visible = true;
+            Pass.Visible = true;
 
             client.SendRequest(new TasklistGetRequest(Users.login, Users.password));
         }
