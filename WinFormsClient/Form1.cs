@@ -46,8 +46,7 @@ namespace WinFormsClient
                     }
                     SocketClient client = new (ip_address, port);
                     DataStore.Instance.SocketClient = client;
-
-                    Logs.LogEntry($"Connecting.....{ip_address}: {port}");                   
+                   
                     client.SendRequest(new PingRequest(null, null, "TESTING CONNECTION"));
                     break;
                 }

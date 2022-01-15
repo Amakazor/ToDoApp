@@ -116,7 +116,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1859, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(741, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -222,7 +222,7 @@
             // Fname
             // 
             this.Fname.AutoSize = true;
-            this.Fname.Location = new System.Drawing.Point(626, 41);
+            this.Fname.Location = new System.Drawing.Point(114, 31);
             this.Fname.Name = "Fname";
             this.Fname.Size = new System.Drawing.Size(59, 15);
             this.Fname.TabIndex = 5;
@@ -231,7 +231,7 @@
             // Lname
             // 
             this.Lname.AutoSize = true;
-            this.Lname.Location = new System.Drawing.Point(625, 59);
+            this.Lname.Location = new System.Drawing.Point(113, 49);
             this.Lname.Name = "Lname";
             this.Lname.Size = new System.Drawing.Size(58, 15);
             this.Lname.TabIndex = 6;
@@ -240,7 +240,7 @@
             // Uname
             // 
             this.Uname.AutoSize = true;
-            this.Uname.Location = new System.Drawing.Point(625, 79);
+            this.Uname.Location = new System.Drawing.Point(113, 69);
             this.Uname.Name = "Uname";
             this.Uname.Size = new System.Drawing.Size(60, 15);
             this.Uname.TabIndex = 7;
@@ -249,7 +249,7 @@
             // Pass
             // 
             this.Pass.AutoSize = true;
-            this.Pass.Location = new System.Drawing.Point(625, 97);
+            this.Pass.Location = new System.Drawing.Point(113, 87);
             this.Pass.Name = "Pass";
             this.Pass.Size = new System.Drawing.Size(57, 15);
             this.Pass.TabIndex = 8;
@@ -258,7 +258,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(531, 40);
+            this.label3.Location = new System.Drawing.Point(19, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 15);
             this.label3.TabIndex = 9;
@@ -267,7 +267,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(531, 59);
+            this.label4.Location = new System.Drawing.Point(19, 49);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 15);
             this.label4.TabIndex = 10;
@@ -276,7 +276,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(531, 80);
+            this.label5.Location = new System.Drawing.Point(19, 70);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 15);
             this.label5.TabIndex = 11;
@@ -285,7 +285,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(531, 97);
+            this.label6.Location = new System.Drawing.Point(19, 87);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 15);
             this.label6.TabIndex = 12;
@@ -324,7 +324,7 @@
             // checkedListBox2
             // 
             this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Location = new System.Drawing.Point(10, 443);
+            this.checkedListBox2.Location = new System.Drawing.Point(10, 48);
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(189, 220);
             this.checkedListBox2.TabIndex = 16;
@@ -333,7 +333,7 @@
             // checkedListBox3
             // 
             this.checkedListBox3.FormattingEnabled = true;
-            this.checkedListBox3.Location = new System.Drawing.Point(205, 443);
+            this.checkedListBox3.Location = new System.Drawing.Point(205, 48);
             this.checkedListBox3.Name = "checkedListBox3";
             this.checkedListBox3.Size = new System.Drawing.Size(189, 220);
             this.checkedListBox3.TabIndex = 17;
@@ -341,7 +341,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(400, 444);
+            this.textBox2.Location = new System.Drawing.Point(400, 49);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(162, 23);
@@ -349,7 +349,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(400, 489);
+            this.textBox3.Location = new System.Drawing.Point(400, 94);
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
@@ -359,7 +359,7 @@
             // checkedListBox4
             // 
             this.checkedListBox4.FormattingEnabled = true;
-            this.checkedListBox4.Location = new System.Drawing.Point(568, 444);
+            this.checkedListBox4.Location = new System.Drawing.Point(568, 49);
             this.checkedListBox4.Name = "checkedListBox4";
             this.checkedListBox4.Size = new System.Drawing.Size(163, 166);
             this.checkedListBox4.TabIndex = 20;
@@ -367,7 +367,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(568, 615);
+            this.button1.Location = new System.Drawing.Point(568, 220);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(163, 22);
@@ -378,7 +378,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(1045, 613);
+            this.button9.Location = new System.Drawing.Point(214, 140);
             this.button9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(162, 22);
@@ -389,7 +389,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(1308, 380);
+            this.button4.Location = new System.Drawing.Point(9, 253);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(250, 22);
@@ -420,7 +420,7 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(1308, 223);
+            this.richTextBox2.Location = new System.Drawing.Point(9, 94);
             this.richTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(251, 155);
@@ -438,7 +438,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1307, 208);
+            this.label8.Location = new System.Drawing.Point(19, 77);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(70, 15);
             this.label8.TabIndex = 27;
@@ -447,7 +447,7 @@
             // CreateStatusTakListBox
             // 
             this.CreateStatusTakListBox.FormattingEnabled = true;
-            this.CreateStatusTakListBox.Location = new System.Drawing.Point(1565, 76);
+            this.CreateStatusTakListBox.Location = new System.Drawing.Point(262, 42);
             this.CreateStatusTakListBox.Name = "CreateStatusTakListBox";
             this.CreateStatusTakListBox.Size = new System.Drawing.Size(179, 76);
             this.CreateStatusTakListBox.TabIndex = 28;
@@ -455,7 +455,7 @@
             // 
             // CreateStatusButton
             // 
-            this.CreateStatusButton.Location = new System.Drawing.Point(1308, 129);
+            this.CreateStatusButton.Location = new System.Drawing.Point(5, 95);
             this.CreateStatusButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CreateStatusButton.Name = "CreateStatusButton";
             this.CreateStatusButton.Size = new System.Drawing.Size(251, 22);
@@ -467,7 +467,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1308, 168);
+            this.label9.Location = new System.Drawing.Point(10, 27);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(32, 15);
             this.label9.TabIndex = 26;
@@ -477,7 +477,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1313, 59);
+            this.label10.Location = new System.Drawing.Point(10, 25);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(42, 15);
             this.label10.TabIndex = 25;
@@ -486,7 +486,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(1308, 76);
+            this.textBox4.Location = new System.Drawing.Point(5, 42);
             this.textBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(251, 23);
@@ -494,7 +494,7 @@
             // 
             // ColorButton
             // 
-            this.ColorButton.Location = new System.Drawing.Point(1308, 103);
+            this.ColorButton.Location = new System.Drawing.Point(5, 69);
             this.ColorButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ColorButton.Name = "ColorButton";
             this.ColorButton.Size = new System.Drawing.Size(194, 22);
@@ -506,7 +506,7 @@
             // ColorPanel
             // 
             this.ColorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ColorPanel.Location = new System.Drawing.Point(1509, 103);
+            this.ColorPanel.Location = new System.Drawing.Point(206, 69);
             this.ColorPanel.Name = "ColorPanel";
             this.ColorPanel.Size = new System.Drawing.Size(50, 22);
             this.ColorPanel.TabIndex = 31;
@@ -514,7 +514,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(798, 164);
+            this.label11.Location = new System.Drawing.Point(12, 27);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(89, 15);
             this.label11.TabIndex = 33;
@@ -524,7 +524,7 @@
             // StatusEditTasklistBox
             // 
             this.StatusEditTasklistBox.FormattingEnabled = true;
-            this.StatusEditTasklistBox.Location = new System.Drawing.Point(798, 185);
+            this.StatusEditTasklistBox.Location = new System.Drawing.Point(12, 48);
             this.StatusEditTasklistBox.Name = "StatusEditTasklistBox";
             this.StatusEditTasklistBox.Size = new System.Drawing.Size(206, 94);
             this.StatusEditTasklistBox.TabIndex = 32;
@@ -533,7 +533,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1010, 167);
+            this.label12.Location = new System.Drawing.Point(224, 30);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(81, 15);
             this.label12.TabIndex = 35;
@@ -543,7 +543,7 @@
             // StatusEditStatusBox
             // 
             this.StatusEditStatusBox.FormattingEnabled = true;
-            this.StatusEditStatusBox.Location = new System.Drawing.Point(1010, 185);
+            this.StatusEditStatusBox.Location = new System.Drawing.Point(224, 48);
             this.StatusEditStatusBox.Name = "StatusEditStatusBox";
             this.StatusEditStatusBox.Size = new System.Drawing.Size(224, 94);
             this.StatusEditStatusBox.TabIndex = 34;
@@ -551,7 +551,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(1045, 525);
+            this.textBox7.Location = new System.Drawing.Point(214, 52);
             this.textBox7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox7.Multiline = true;
             this.textBox7.Name = "textBox7";
@@ -560,7 +560,7 @@
             // 
             // StatusEditName
             // 
-            this.StatusEditName.Location = new System.Drawing.Point(798, 299);
+            this.StatusEditName.Location = new System.Drawing.Point(12, 162);
             this.StatusEditName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusEditName.Name = "StatusEditName";
             this.StatusEditName.Size = new System.Drawing.Size(206, 23);
@@ -569,14 +569,14 @@
             // StatusEditColorPanel
             // 
             this.StatusEditColorPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.StatusEditColorPanel.Location = new System.Drawing.Point(1184, 300);
+            this.StatusEditColorPanel.Location = new System.Drawing.Point(398, 163);
             this.StatusEditColorPanel.Name = "StatusEditColorPanel";
             this.StatusEditColorPanel.Size = new System.Drawing.Size(50, 22);
             this.StatusEditColorPanel.TabIndex = 39;
             // 
             // StatusEditColorButton
             // 
-            this.StatusEditColorButton.Location = new System.Drawing.Point(1010, 300);
+            this.StatusEditColorButton.Location = new System.Drawing.Point(224, 163);
             this.StatusEditColorButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusEditColorButton.Name = "StatusEditColorButton";
             this.StatusEditColorButton.Size = new System.Drawing.Size(168, 22);
@@ -587,7 +587,7 @@
             // 
             // StatusSave
             // 
-            this.StatusSave.Location = new System.Drawing.Point(798, 326);
+            this.StatusSave.Location = new System.Drawing.Point(12, 189);
             this.StatusSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusSave.Name = "StatusSave";
             this.StatusSave.Size = new System.Drawing.Size(132, 22);
@@ -598,7 +598,7 @@
             // 
             // StatusDelete
             // 
-            this.StatusDelete.Location = new System.Drawing.Point(798, 284);
+            this.StatusDelete.Location = new System.Drawing.Point(12, 147);
             this.StatusDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StatusDelete.Name = "StatusDelete";
             this.StatusDelete.Size = new System.Drawing.Size(132, 22);
@@ -610,7 +610,7 @@
             // checkedListBox5
             // 
             this.checkedListBox5.FormattingEnabled = true;
-            this.checkedListBox5.Location = new System.Drawing.Point(850, 525);
+            this.checkedListBox5.Location = new System.Drawing.Point(19, 52);
             this.checkedListBox5.Name = "checkedListBox5";
             this.checkedListBox5.Size = new System.Drawing.Size(189, 112);
             this.checkedListBox5.TabIndex = 29;
@@ -618,7 +618,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(568, 641);
+            this.button5.Location = new System.Drawing.Point(568, 246);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(163, 22);
@@ -629,7 +629,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(1045, 561);
+            this.button6.Location = new System.Drawing.Point(214, 88);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(162, 22);
@@ -640,7 +640,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(1307, 185);
+            this.textBox5.Location = new System.Drawing.Point(9, 52);
             this.textBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(251, 23);
@@ -648,7 +648,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(1045, 587);
+            this.button7.Location = new System.Drawing.Point(214, 114);
             this.button7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(162, 22);
@@ -660,7 +660,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 425);
+            this.label15.Location = new System.Drawing.Point(12, 30);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(47, 15);
             this.label15.TabIndex = 42;
@@ -670,7 +670,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(213, 425);
+            this.label16.Location = new System.Drawing.Point(213, 30);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(32, 15);
             this.label16.TabIndex = 43;
@@ -680,7 +680,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(400, 425);
+            this.label17.Location = new System.Drawing.Point(400, 30);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(39, 15);
             this.label17.TabIndex = 44;
@@ -690,7 +690,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(400, 472);
+            this.label18.Location = new System.Drawing.Point(400, 77);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(67, 15);
             this.label18.TabIndex = 45;
@@ -700,7 +700,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(568, 426);
+            this.label19.Location = new System.Drawing.Point(568, 31);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(64, 15);
             this.label19.TabIndex = 46;
@@ -710,7 +710,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(798, 282);
+            this.label20.Location = new System.Drawing.Point(12, 145);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(42, 15);
             this.label20.TabIndex = 47;
@@ -720,7 +720,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(850, 507);
+            this.label21.Location = new System.Drawing.Point(19, 34);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(47, 15);
             this.label21.TabIndex = 48;
@@ -730,7 +730,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(1045, 507);
+            this.label22.Location = new System.Drawing.Point(214, 34);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(42, 15);
             this.label22.TabIndex = 49;
@@ -741,7 +741,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1859, 675);
+            this.ClientSize = new System.Drawing.Size(741, 375);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);

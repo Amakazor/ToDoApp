@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows.Forms;
+﻿using Common.Communication;
+using Common.Serialization;
+using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using Common.Communication.Responses;
+using Common.Communication.Requests.RequestEvents;
+using Common.Models;
+using System.IO;
+using System.Collections.Generic;
 
-namespace WinFormsClient
+namespace ConsoleServer
 {
     public partial class Logs
     {
         private static bool firstLog = false;
-
         public static void LogEntry(string message)
         {
             StreamWriter logFile;

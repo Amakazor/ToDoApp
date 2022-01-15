@@ -80,9 +80,11 @@ namespace ConsoleServer
                         BinaryReader reader = new BinaryReader(client.GetStream(), Encoding.UTF8, true);
                         data = reader.ReadString();
                         Console.WriteLine("Received: {0}", data);
+                        Logs.LogEntry("Received: " + data);
 
                         string message = Serializer.SerializeObject<Response>(requestProcessor.Process(data));
                         Console.WriteLine("Sent: {0}", message);
+                        Logs.LogEntry("Sent: " + message);
                         BinaryWriter writer = new BinaryWriter(client.GetStream(), Encoding.UTF8, true);
                         writer.Write(message);
 
