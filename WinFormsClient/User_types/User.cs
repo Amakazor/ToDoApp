@@ -24,8 +24,22 @@ namespace WinFormsClient.User_types
             InitializeComponent();
             DataStore.Instance.TakListsChanged += Instance_TakListsChanged;
             HideAll();
-
             client.SendRequest(new TasklistGetRequest(Users.login, Users.password));
+
+            Fname.Text = SocketClient.First_name.ToString();
+            Lname.Text = SocketClient.Last_name.ToString();
+            Uname.Text = SocketClient.User_name.ToString();
+            Pass.Text = SocketClient.User_password.ToString();
+
+            label3.Visible = true;
+            Fname.Visible = true;
+            label4.Visible = true;
+            Lname.Visible = true;
+            label5.Visible = true;
+            Uname.Visible = true;
+            label6.Visible = true;
+            Pass.Visible = true;
+
         }
 
         private void HideAll()
