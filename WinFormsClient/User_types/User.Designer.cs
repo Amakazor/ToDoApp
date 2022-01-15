@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.newTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -55,6 +56,12 @@
             this.checkedListBox4 = new System.Windows.Forms.CheckedListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,12 +71,13 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newTaskToolStripMenuItem,
             this.editTaskToolStripMenuItem,
+            this.sendTicketToolStripMenuItem,
             this.aboutToolStripMenuItem,
             this.logOutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(719, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1144, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -86,6 +94,13 @@
             this.editTaskToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.editTaskToolStripMenuItem.Text = "Edit Task";
             this.editTaskToolStripMenuItem.Click += new System.EventHandler(this.editTaskToolStripMenuItem_Click);
+            // 
+            // sendTicketToolStripMenuItem
+            // 
+            this.sendTicketToolStripMenuItem.Name = "sendTicketToolStripMenuItem";
+            this.sendTicketToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.sendTicketToolStripMenuItem.Text = "Report a problem";
+            this.sendTicketToolStripMenuItem.Click += new System.EventHandler(this.sendTicketToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -295,20 +310,84 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(430, 497);
+            this.button2.Location = new System.Drawing.Point(10, 550);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(163, 22);
+            this.button2.Size = new System.Drawing.Size(583, 22);
             this.button2.TabIndex = 22;
             this.button2.Text = "Refresh";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(431, 497);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(163, 22);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "Delete task";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(711, 426);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(250, 22);
+            this.button4.TabIndex = 28;
+            this.button4.Text = "Create new ticket";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(711, 246);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 15);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "Description:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(711, 206);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 15);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Title:";
+            this.label9.Visible = false;
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(711, 263);
+            this.richTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(251, 155);
+            this.richTextBox2.TabIndex = 25;
+            this.richTextBox2.Text = "";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(711, 223);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(251, 23);
+            this.textBox4.TabIndex = 24;
+            // 
             // User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 675);
+            this.ClientSize = new System.Drawing.Size(1144, 675);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkedListBox4);
@@ -372,5 +451,12 @@
         private System.Windows.Forms.CheckedListBox checkedListBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.ToolStripMenuItem sendTicketToolStripMenuItem;
     }
 }

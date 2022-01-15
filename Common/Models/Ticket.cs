@@ -12,6 +12,17 @@ namespace Common.Models
 {
     public class Ticket
     {
+        public Ticket(string name, string description, User author, TicketStatus status)
+        {
+            Name = name;
+            Description = description;
+            Author = author;
+            Status = status;
+        }
+        public Ticket()
+        { 
+        }
+
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
